@@ -1,0 +1,234 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+			 xmlns:lvc="using:LiveChartsCore.SkiaSharpView.Avalonia"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="MotionDrive.Desktop.TelemetryChartsView">
+	
+	<Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="5">
+		<Grid.RowDefinitions>
+			<RowDefinition Height="*"></RowDefinition>
+			<RowDefinition Height="2*"></RowDefinition>
+			<RowDefinition Height="3*"></RowDefinition>
+			<RowDefinition Height="2*"></RowDefinition>
+		</Grid.RowDefinitions>
+		<Grid.ColumnDefinitions>
+			<ColumnDefinition Width="*"></ColumnDefinition>
+			<ColumnDefinition Width="3*"></ColumnDefinition>
+		</Grid.ColumnDefinitions>
+
+		<Border Margin="5, 5, 5, 5" CornerRadius="5" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="10" Background="#333333">
+			<DockPanel HorizontalAlignment="Stretch">
+				<Button Command="{Binding GoToChooseSession}" Content="Back" Background="#4D4D4D" Foreground="White" Width="100"
+						HorizontalAlignment="Left" Margin="8,0,0,0" CornerRadius="5" HorizontalContentAlignment="Center"/>
+
+				<ComboBox Name="LapSelection" Margin="30, 0, 0, 0" VerticalAlignment="Center" Width="175" Background="#4D4D4D" SelectedIndex="{Binding CurrentLapIndex}"
+						  Foreground="White" PlaceholderForeground="#c4c4c4" CornerRadius="5"
+						  PlaceholderText="Lap" ItemsSource="{Binding Laps}" HorizontalContentAlignment="Center" SelectionChanged="ComboBox_SelectionChanged">
+					<ComboBox.ItemTemplate>
+						<DataTemplate>
+							<TextBlock Text="{Binding LapName}" Foreground="{Binding Color}"/>
+						</DataTemplate>
+					</ComboBox.ItemTemplate>
+
+				</ComboBox>
+
+				<Button Command="{Binding ShowPreviousLap}" Content="Previous Lap" Background="#4D4D4D" Foreground="White" Width="100"
+					HorizontalAlignment="Left" Margin="8,0,0,0" CornerRadius="5" HorizontalContentAlignment="Center" IsEnabled="{Binding !PreviousLapDisabled}"/>
+
+				<Button Command="{Binding ShowNextLap}" Content="Next Lap" Background="#4D4D4D" Foreground="White" Width="100"
+					HorizontalAlignment="Left" Margin="8,0,0,0" CornerRadius="5" HorizontalContentAlignment="Center" IsEnabled="{Binding !NextLapDisabled}"/>
+
+				<Button Content="Send to Friend" Background="#800000" Foreground="White" Width="120"
+						HorizontalAlignment="Right" Margin="8,0,30,0" CornerRadius="5" DockPanel.Dock="Right" HorizontalContentAlignment="Center"/>
+			</DockPanel>
+		</Border>
+
+		<Border Margin="5, 5, 5, 5" CornerRadius="5" Grid.Row="1" Grid.Column="0" Background="#333333">
+			<StackPanel>
+				<TextBlock Text="Selected Session" FontSize="18" Foreground="White" HorizontalAlignment="Center" Margin="0,5,0,10" />
+
+				<DockPanel Margin="10,5,0,0">
+					<TextBlock Text="Session: " Foreground="White" FontSize="15"/>
+					<TextBlock Text="Race" Foreground="White" DockPanel.Dock="Right" FontSize="15" Margin="25,0,0,0"/>
+				</DockPanel>
+
+				<DockPanel Margin="10,5,0,0">
+					<TextBlock Text="Length: " Foreground="White" FontSize="15"/>
+					<TextBlock Text="60 min" Foreground="White" DockPanel.Dock="Right" FontSize="15" Margin="25,0,0,0" />
+				</DockPanel>
+
+				<DockPanel Margin="10,5,0,0">
+					<TextBlock Text="Track: " Foreground="White" FontSize="15"/>
+					<TextBlock Text="Nürburgring" Foreground="White" DockPanel.Dock="Right" FontSize="15" Margin="25,0,0,0"/>
+				</DockPanel>
+
+				<DockPanel Margin="10,5,0,0">
+					<TextBlock Text="Total laps: " Foreground="White" FontSize="15"/>
+					<TextBlock Text="27 Laps" Foreground="White" DockPanel.Dock="Right" FontSize="15" Margin="25,0,0,0"/>
+				</DockPanel>
+
+				<DockPanel Margin="10,5,0,0">
+					<TextBlock Text="Car: " Foreground="White" FontSize="15"/>
+					<TextBlock Text="McLaren 720S GT3 Evo" Foreground="White" DockPanel.Dock="Right" FontSize="15" Margin="25,0,0,0" />
+				</DockPanel>
+			</StackPanel>
+		</Border>
+
+		<Border Margin="5,5,5,5" CornerRadius="5" Grid.Row="2" Grid.Column="0" Background="#333333">
+			<Grid>
+				<Grid.RowDefinitions>
+					<RowDefinition Height="*"/>
+					<RowDefinition Height="*"/>
+				</Grid.RowDefinitions>
+				<Grid.ColumnDefinitions>
+					<ColumnDefinition Width="*"/>
+					<ColumnDefinition Width="*"/>
+				</Grid.ColumnDefinitions>
+
+				<StackPanel Grid.Row="0" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center">
+					<StackPanel Orientation="Horizontal" Spacing="2" Margin="40,0,0,0">
+						<Rectangle Width="10" Height="30" Fill="Green"/>
+						<Rectangle Width="10" Height="30" Fill="Green"/>
+						<Rectangle Width="10" Height="30" Fill="Green"/>
+					</StackPanel>
+					<StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+						<TextBlock Text="Wear:" Foreground="White" FontSize="12" HorizontalAlignment="Center"/>
+						<TextBlock Text="{Binding CurrentTyres.TyreWearFL}" Foreground="White" FontSize="12" HorizontalAlignment="Center"/>
+					</StackPanel>
+					<StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+						<TextBlock Text="Brake Temp:" Foreground="White" FontSize="12" HorizontalAlignment="Center"/>
+						<TextBlock Text="{Binding CurrentTyres.BrakeTempFL}" Foreground="White" FontSize="12" HorizontalAlignment="Center"/>
+						<TextBlock Text="°C" Foreground="White" FontSize="12" HorizontalAlignment="Center"/>
+					</StackPanel>
+					<StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+						<TextBlock Text="Pressure:" Foreground="White" FontSize="12" HorizontalAlignment="Center"/>
+						<TextBlock Text="{Binding CurrentTyres.TyrePressureFL}" Foreground="White" FontSize="12" HorizontalAlignment="Center"/>
+						<TextBlock Text="psi" Foreground="White" FontSize="12" HorizontalAlignment="Center"/>
+					</StackPanel>
+				</StackPanel>
+
+				<StackPanel Grid.Row="0" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center">
+					<StackPanel Orientation="Horizontal" Spacing="2" Margin="40,0,0,0">
+						<Rectangle Width="10" Height="30" Fill="Green"/>
+						<Rectangle Width="10" Height="30" Fill="Green"/>
+						<Rectangle Width="10" Height="30" Fill="Green"/>
+					</StackPanel>
+					<StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+						<TextBlock Text="Wear:" Foreground="White" FontSize="12" HorizontalAlignment="Center"/>
+						<TextBlock Text="{Binding CurrentTyres.TyreWearFR}" Foreground="White" FontSize="12" HorizontalAlignment="Center"/>
+					</StackPanel>
+					<StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+						<TextBlock Text="Brake Temp:" Foreground="White" FontSize="12" HorizontalAlignment="Center"/>
+						<TextBlock Text="{Binding CurrentTyres.BrakeTempFR}" Foreground="White" FontSize="12" HorizontalAlignment="Center"/>
+						<TextBlock Text="°C" Foreground="White" FontSize="12" HorizontalAlignment="Center"/>
+					</StackPanel>
+					<StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+						<TextBlock Text="Pressure:" Foreground="White" FontSize="12" HorizontalAlignment="Center"/>
+						<TextBlock Text="{Binding CurrentTyres.TyrePressureFR}" Foreground="White" FontSize="12" HorizontalAlignment="Center"/>
+						<TextBlock Text="psi" Foreground="White" FontSize="12" HorizontalAlignment="Center"/>
+					</StackPanel>
+				</StackPanel>
+
+				<StackPanel Grid.Row="1" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center">
+					<StackPanel Orientation="Horizontal" Spacing="2" Margin="40,0,0,0">
+						<Rectangle Width="10" Height="30" Fill="Green"/>
+						<Rectangle Width="10" Height="30" Fill="Green"/>
+						<Rectangle Width="10" Height="30" Fill="Green"/>
+					</StackPanel>
+					<StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+						<TextBlock Text="Wear:" Foreground="White" FontSize="12" HorizontalAlignment="Center"/>
+						<TextBlock Text="{Binding CurrentTyres.TyreWearRL}" Foreground="White" FontSize="12" HorizontalAlignment="Center"/>
+					</StackPanel>
+					<StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+						<TextBlock Text="Brake Temp:" Foreground="White" FontSize="12" HorizontalAlignment="Center"/>
+						<TextBlock Text="{Binding CurrentTyres.BrakeTempRL}" Foreground="White" FontSize="12" HorizontalAlignment="Center"/>
+						<TextBlock Text="°C" Foreground="White" FontSize="12" HorizontalAlignment="Center"/>
+					</StackPanel>
+					<StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+						<TextBlock Text="Pressure:" Foreground="White" FontSize="12" HorizontalAlignment="Center"/>
+						<TextBlock Text="{Binding CurrentTyres.TyrePressureRL}" Foreground="White" FontSize="12" HorizontalAlignment="Center"/>
+						<TextBlock Text="psi" Foreground="White" FontSize="12" HorizontalAlignment="Center"/>
+					</StackPanel>
+				</StackPanel>
+
+				<StackPanel Grid.Row="1" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center">
+					<StackPanel Orientation="Horizontal" Spacing="2" Margin="40,0,0,0">
+						<Rectangle Width="10" Height="30" Fill="Green"/>
+						<Rectangle Width="10" Height="30" Fill="Green"/>
+						<Rectangle Width="10" Height="30" Fill="Green"/>
+					</StackPanel>
+					<StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+						<TextBlock Text="Wear:" Foreground="White" FontSize="12" HorizontalAlignment="Center"/>
+						<TextBlock Text="{Binding CurrentTyres.TyreWearRR}" Foreground="White" FontSize="12" HorizontalAlignment="Center"/>
+					</StackPanel>
+					<StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+						<TextBlock Text="Brake Temp:" Foreground="White" FontSize="12" HorizontalAlignment="Center"/>
+						<TextBlock Text="{Binding CurrentTyres.BrakeTempRR}" Foreground="White" FontSize="12" HorizontalAlignment="Center"/>
+						<TextBlock Text="°C" Foreground="White" FontSize="12" HorizontalAlignment="Center"/>
+					</StackPanel>
+					<StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+						<TextBlock Text="Pressure:" Foreground="White" FontSize="12" HorizontalAlignment="Center"/>
+						<TextBlock Text="{Binding CurrentTyres.TyrePressureRR}" Foreground="White" FontSize="12" HorizontalAlignment="Center"/>
+						<TextBlock Text="psi" Foreground="White" FontSize="12" HorizontalAlignment="Center"/>
+					</StackPanel>
+				</StackPanel>
+			</Grid>
+		</Border>
+
+
+		<Border Margin="5, 5, 5, 5" CornerRadius="5" Grid.Row="3" Grid.Column="0">
+			<StackPanel Margin="5,0,0,0" Width="200" HorizontalAlignment="Center" VerticalAlignment="Center">
+				<Border ToolTip.Tip="Coming soon!">
+					<Button Content="Get AI Feedback" Background="#800000" Foreground="White" HorizontalAlignment="Center" Width="150" Margin="0,0,0,40" HorizontalContentAlignment="Center" IsEnabled="False"/>
+				</Border>
+
+			</StackPanel>
+
+		</Border>
+
+		<Border Margin="5, 5, 5, 5" CornerRadius="5" Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="10" Grid.RowSpan="10">
+			<StackPanel Margin="10" HorizontalAlignment="Stretch" VerticalAlignment="Top" Spacing="5">
+				<StackPanel HorizontalAlignment="Stretch" VerticalAlignment="Top">
+					<TextBlock Text="Throttle, Brake, Clutch" Foreground="Gray" FontSize="10" HorizontalAlignment="Left"/>
+					<Border CornerRadius="5" Height="150">
+						<lvc:CartesianChart
+							Series="{Binding ThrottleBrakeClutchSeries}"
+							ZoomMode="X"
+							YAxes="{Binding ThrottleBrakeClutchYAxis}"
+							XAxes="{Binding ThrottleBrakeClutchXAxis}"
+							TooltipPosition="Right"
+							TooltipBackgroundPaint="{Binding TooltipBackground}"
+							PointerMoved="CartesianChart_PointerMoved"
+									/>
+					</Border>
+				</StackPanel>
+
+				<StackPanel HorizontalAlignment="Stretch" VerticalAlignment="Top">
+					<TextBlock Text="Steering" Foreground="Gray" FontSize="10" HorizontalAlignment="Left"/>
+					<Border CornerRadius="5" Height="150">
+						<lvc:CartesianChart
+							Series="{Binding SteeringSeries}"
+							ZoomMode="X"
+							YAxes="{Binding SteeringYAxis}"
+							XAxes="{Binding ThrottleBrakeClutchXAxis}"
+							TooltipPosition="Hidden"/>
+					</Border>
+				</StackPanel>
+
+				<StackPanel HorizontalAlignment="Stretch" VerticalAlignment="Top">
+					<TextBlock Text="RPM" Foreground="Gray" FontSize="10" HorizontalAlignment="Left"/>
+					<Border CornerRadius="5" Height="150">
+						<lvc:CartesianChart
+							Series="{Binding RPMSeries}"
+							ZoomMode="X"
+							XAxes="{Binding ThrottleBrakeClutchXAxis}"
+							YAxes="{Binding RPMYAxis}"
+							TooltipPosition="Hidden"/>
+					</Border>
+				</StackPanel>
+			</StackPanel>
+		</Border>
+	</Grid>
+</UserControl>

@@ -1,0 +1,131 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+			 xmlns:svg="clr-namespace:Avalonia.Svg.Skia;assembly=Avalonia.Svg.Skia"
+			 xmlns:local="clr-namespace:MotionDrive.Desktop.Converter;assembly=MotionDrive.Desktop"
+			 xmlns:asyncImageLoader="clr-namespace:AsyncImageLoader;assembly=AsyncImageLoader.Avalonia"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="MotionDrive.Desktop.ProfileEditView">
+
+	<Grid>
+		<Grid.ColumnDefinitions>
+			<ColumnDefinition Width="*"></ColumnDefinition>
+			<ColumnDefinition Width="7*"></ColumnDefinition>
+			<ColumnDefinition Width="*"></ColumnDefinition>
+		</Grid.ColumnDefinitions>
+		<Grid.RowDefinitions>
+			<RowDefinition Height="*"></RowDefinition>
+			<RowDefinition Height="10"></RowDefinition>
+			<RowDefinition Height="10*"></RowDefinition>
+		</Grid.RowDefinitions>
+
+		<Border CornerRadius="5" Background="#333333" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Grid.Column="1" Grid.Row="0">
+			<TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="25" FontWeight="Bold">Edit Profile Settings</TextBlock>
+		</Border>
+
+		<Border CornerRadius="5" Background="#333333" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Grid.Column="1" Grid.Row="2">
+			<ScrollViewer>
+				<Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+					<Grid.ColumnDefinitions>
+						<ColumnDefinition Width="200"></ColumnDefinition>
+						<ColumnDefinition Width="2*"></ColumnDefinition>
+						<ColumnDefinition Width="*"></ColumnDefinition>
+					</Grid.ColumnDefinitions>
+					<Grid.RowDefinitions>
+						<RowDefinition Height="*"></RowDefinition>
+						<RowDefinition Height="*"></RowDefinition>
+					</Grid.RowDefinitions>
+
+				
+					<Image asyncImageLoader:ImageLoader.Source="https://res.cloudinary.com/motiondrive/image/upload/default" Grid.Column="0" Grid.Row="0" VerticalAlignment="Top" ></Image>
+
+					<StackPanel Grid.Column="1" Grid.Row="0" Margin="5" Spacing="5" VerticalAlignment="Top">
+						<TextBlock Text="Username" FontSize="10"></TextBlock>
+						<Border CornerRadius="5" Background="Gray">
+							<TextBox Text="{Binding Profile.userName}" CornerRadius="5" BorderBrush="Black" Background="#4D4D4D"></TextBox>
+						</Border>
+						<TextBlock Text="Email" FontSize="10"></TextBlock>
+						<Border CornerRadius="5" Background="Gray">
+							<TextBox Text="{Binding Profile.email}" CornerRadius="5" BorderBrush="Black" Background="#4D4D4D"></TextBox>
+						</Border>
+						<TextBlock Text="Phone number" FontSize="10"></TextBlock>
+						<Border CornerRadius="5" Background="Gray">
+							<TextBox Text="{Binding Profile.phoneNumber}" CornerRadius="5" BorderBrush="Black" Background="#4D4D4D"
+									 MaxLength="15"
+									 TextChanged="TextBox_TextChanged"></TextBox>
+						</Border>
+
+						<StackPanel Orientation="Horizontal">
+							<TextBlock Text="About me: " FontSize="10" HorizontalAlignment="Stretch"></TextBlock>
+							<TextBlock x:Name="CharCounter" Text="0 / 150" FontSize="10" HorizontalAlignment="Right"></TextBlock>
+						</StackPanel>
+						<Border CornerRadius="5" Background="Gray">
+							<TextBox Text="{Binding Profile.biography}" x:Name="AboutMeTextBox" CornerRadius="5" BorderBrush="Black" Background="#4D4D4D" TextWrapping="Wrap" AcceptsReturn="True" Height="80" TextChanged="AboutMeTextBox_TextChanged"></TextBox>
+						</Border>
+
+						<Grid HorizontalAlignment="Stretch">
+							<Grid.ColumnDefinitions>
+								<ColumnDefinition Width="*"></ColumnDefinition>
+								<ColumnDefinition Width="3*"></ColumnDefinition>
+							</Grid.ColumnDefinitions>
+							<Grid.RowDefinitions>
+								<RowDefinition Height="*"></RowDefinition>
+								<RowDefinition Height="3"></RowDefinition>
+								<RowDefinition Height="*"></RowDefinition>
+								<RowDefinition Height="3"></RowDefinition>
+								<RowDefinition Height="*"></RowDefinition>
+								<RowDefinition Height="3"></RowDefinition>
+								<RowDefinition Height="*"></RowDefinition>
+								<RowDefinition Height="3"></RowDefinition>
+								<RowDefinition Height="*"></RowDefinition>
+								<RowDefinition Height="3"></RowDefinition>
+							</Grid.RowDefinitions>
+							
+							<TextBlock Text="Country" VerticalAlignment="Center" FontSize="15" HorizontalAlignment="Stretch" Grid.Column="0" Grid.Row="0"></TextBlock>
+							<StackPanel Orientation="Horizontal" Grid.Column="1" Grid.Row="0" HorizontalAlignment="Stretch">
+								<ComboBox BorderBrush="Black" CornerRadius="5" HorizontalAlignment="Stretch" Background="#4D4D4D" VerticalAlignment="Center" ItemsSource="{Binding Countries}" MaxDropDownHeight="270" SelectionChanged="ComboBox_SelectionChanged">
+									<ComboBox.ItemTemplate>
+										<DataTemplate>
+											<TextBlock Text="{Binding CountryName}" />
+										</DataTemplate>
+									</ComboBox.ItemTemplate>
+								</ComboBox>
+								<Image Margin="10, 0, 0, 0" HorizontalAlignment="Right" asyncImageLoader:ImageLoader.Source="{Binding CurrentCountryImageURL}"></Image>
+							</StackPanel>
+
+							<TextBlock Text="Favourite Car" VerticalAlignment="Center" FontSize="15" HorizontalAlignment="Stretch" Grid.Column="0" Grid.Row="2"></TextBlock>
+							<Border CornerRadius="5" Background="Gray" Grid.Column="1" Grid.Row="2">
+								<TextBox Text="{Binding Profile.favouriteCar}" CornerRadius="5" BorderBrush="Black" Background="#4D4D4D"></TextBox>
+							</Border>
+
+							<TextBlock Text="Favourite Track" VerticalAlignment="Center" FontSize="15" HorizontalAlignment="Stretch" Grid.Column="0" Grid.Row="4"></TextBlock>
+							<Border CornerRadius="5" Background="Gray" Grid.Column="1" Grid.Row="4">
+								<TextBox Text="{Binding Profile.favouriteTrack}" CornerRadius="5" BorderBrush="Black" Background="#4D4D4D"></TextBox>
+							</Border>
+
+							<TextBlock Text="Favourite Game" VerticalAlignment="Center" FontSize="15" HorizontalAlignment="Stretch" Grid.Column="0" Grid.Row="6"></TextBlock>
+							<Border CornerRadius="5" Background="Gray" Grid.Column="1" Grid.Row="6">
+								<TextBox Text="{Binding Profile.favouriteGame}" CornerRadius="5" BorderBrush="Black" Background="#4D4D4D"></TextBox>
+							</Border>
+
+							<TextBlock Text="Favourite Car Class" VerticalAlignment="Center" FontSize="15" HorizontalAlignment="Stretch" Grid.Column="0" Grid.Row="8"></TextBlock>
+							<Border CornerRadius="5" Background="Gray" Grid.Column="1" Grid.Row="8">
+								<TextBox Text="{Binding Profile.favouriteCarClass}" CornerRadius="5" BorderBrush="Black" Background="#4D4D4D"></TextBox>
+							</Border>
+						</Grid>
+					</StackPanel>
+					
+					<!-- Save Changes, Reset Password and Log out button -->
+					<StackPanel Orientation="Horizontal" Grid.Column="0" Grid.ColumnSpan="10" Grid.Row="1" Margin="20, 0, 0, 0" Spacing="5">
+						<Button Background="#4D4D4D" BorderBrush="Black" Command="{Binding Save}">Save</Button>
+						<Button Background="#4D4D4D" BorderBrush="Black" Command="{Binding ResetPassword}" IsEnabled="False">Reset Password</Button>
+						<Button Background="#750E21" BorderBrush="Black" Command="{Binding LogOut}">Log out</Button>
+					</StackPanel>
+					
+					
+				</Grid>
+			</ScrollViewer>
+		</Border>
+	</Grid>
+</UserControl>

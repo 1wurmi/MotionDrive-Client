@@ -1,0 +1,101 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="Desktop.DashboardView">
+  
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="50*"></ColumnDefinition>
+            <ColumnDefinition Width="50*"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="50*"></RowDefinition>
+            <RowDefinition Height="10*"></RowDefinition>
+            <RowDefinition Height="50*"></RowDefinition>
+        </Grid.RowDefinitions>
+        <Border Background="#333333" CornerRadius="6" Margin="9, 9, 4.5, 4.5">
+            <StackPanel HorizontalAlignment="Stretch">
+                <TextBlock HorizontalAlignment="Center" Foreground="White" Margin="9" FontSize="18" FontWeight="Bold">Last Session</TextBlock>
+                <DockPanel HorizontalAlignment="Stretch" Margin="9, 0, 9, 9">
+                    <Image Source="/Assets/LastSession_ACC.png" DockPanel.Dock="Left" Height="125"></Image>
+                    <StackPanel Margin="20, 9, 9, 9">
+                        <TextBlock Foreground="White" FontSize="16">Track:</TextBlock>
+                        <TextBlock Foreground="White" FontSize="16" Margin="0, 2, 0, 0" >Date:</TextBlock>
+                        <TextBlock Foreground="White" FontSize="16" Margin="0, 2, 0, 0" >Car:</TextBlock>
+                        <TextBlock Foreground="White" FontSize="16" Margin="0, 2, 0, 0" >Laps:</TextBlock>
+                        <TextBlock Foreground="White" FontSize="16" Margin="0, 2, 0, 0" >Session:</TextBlock>
+                    </StackPanel>
+                    <StackPanel Margin="9, 9, 9 ,9 ">
+                        <TextBlock Foreground="White" FontSize="16">Bathurst</TextBlock>
+                        <TextBlock Foreground="White" FontSize="16" Margin="0, 2, 0, 0">27-05-2025</TextBlock>
+                        <TextBlock Foreground="White" FontSize="16" Margin="0, 2, 0, 0">BMW M4 GT3</TextBlock>
+                        <TextBlock Foreground="White" FontSize="16" Margin="0, 2, 0, 0">23</TextBlock>
+                        <TextBlock Foreground="White" FontSize="16" Margin="0, 2, 0, 0">QUAL</TextBlock>
+                    </StackPanel>
+                </DockPanel>
+                <DockPanel VerticalAlignment="Stretch">
+                <Button Background="White" CornerRadius="6" HorizontalAlignment="Stretch" Margin="9" DockPanel.Dock="Bottom" >
+                    <TextBlock Foreground="Black" HorizontalAlignment="Center">Show Telemetry</TextBlock>
+                </Button>
+                </DockPanel>
+            </StackPanel>
+        </Border>
+        <Border Grid.Row="0" Grid.Column="1" Grid.RowSpan="2" Background="#333333" CornerRadius="6" Margin="4.5, 9, 9, 4.5">
+            <StackPanel> 
+                <TextBlock></TextBlock>
+            </StackPanel>
+        </Border>
+        <Border Grid.Row="1" Grid.Column="0" Grid.RowSpan="2" Background="#333333" CornerRadius="6" Margin="9, 4.5, 4.5, 9">
+            <StackPanel> 
+                <TextBlock></TextBlock>
+            </StackPanel>
+        </Border>
+         <Border Grid.Row="2" Grid.Column="1" Background="#333333" CornerRadius="6" Margin="4.5, 4.5, 9, 9">
+            <StackPanel HorizontalAlignment="Stretch">
+                <TextBlock HorizontalAlignment="Center" Foreground="White" Margin="9" FontSize="18" FontWeight="Bold">Shortcuts</TextBlock>
+                
+				<ScrollViewer HorizontalScrollBarVisibility="Auto">
+					<StackPanel>
+						<ItemsControl ItemsSource="{Binding ShortCutList}">
+							<ItemsControl.ItemTemplate>
+								<DataTemplate>
+									<Border BorderThickness="0, 1, 0, 1" Margin="0, 0, 10, 0" Padding="5">
+										<Border.BorderBrush>
+											<LinearGradientBrush StartPoint="0%,50%" EndPoint="100%,50%">
+												<GradientStop Color="Transparent" Offset="0.0"/>
+												<GradientStop Color="White" Offset="0.5"/>
+												<GradientStop Color="Transparent" Offset="1.0"/>
+											</LinearGradientBrush>
+										</Border.BorderBrush>
+										
+									    <DockPanel HorizontalAlignment="Stretch">
+										    <Grid Margin="10, 0, 0, 0" HorizontalAlignment="Stretch">
+											    <Grid.ColumnDefinitions>
+												    <ColumnDefinition Width="Auto"/>
+												    <ColumnDefinition Width="*"/>
+												    <ColumnDefinition Width="Auto"/>
+											    </Grid.ColumnDefinitions>
+										    </Grid>
+										    <Ellipse Width="13" Height="13" Grid.Column="0" VerticalAlignment="Center" Margin="0, 0, 10, 0">
+											    <Ellipse.Fill>
+												    <SolidColorBrush Color="{Binding EllipseColor}"/>
+											    </Ellipse.Fill>
+										    </Ellipse>
+                                            <TextBlock Grid.Column="1" FontSize="15" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="White" Text="{Binding Name}"></TextBlock>
+                                            <Button Grid.Column="2" Height="28" Background="White" CornerRadius="4" Margin="10,0,20,0"
+												    Command="{Binding ExecuteExecutable}" HorizontalAlignment="Right" IsEnabled="{Binding !IsRunning}">
+                                                <TextBlock Foreground="Black">Launch</TextBlock>
+                                            </Button>
+                                        </DockPanel>
+									</Border>
+								</DataTemplate>
+							</ItemsControl.ItemTemplate>
+						</ItemsControl>
+					</StackPanel>
+				</ScrollViewer>
+            </StackPanel>
+        </Border>
+    </Grid>
+</UserControl>

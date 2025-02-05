@@ -1,0 +1,50 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="MotionDrive.Desktop.PopupView"
+			 Background="Transparent">
+
+	<Grid Background="Transparent">
+		<Rectangle Fill="#80000000" />
+
+		<Border CornerRadius="5" Background="#333333" VerticalAlignment="Center" HorizontalAlignment="Center" Width="400">
+			<StackPanel Spacing="10">
+
+				<Grid HorizontalAlignment="Stretch" VerticalAlignment="Center">
+					<Grid.ColumnDefinitions>
+						<ColumnDefinition Width="*" />
+						<ColumnDefinition Width="Auto"/>
+					</Grid.ColumnDefinitions>
+
+					<TextBlock Padding="8, 8, 8, 10" FontSize="19" VerticalAlignment="Center" Text="{Binding Title}" Grid.Column="0"/>
+					<Button Command="{Binding OnClosePopup}" Background="Transparent" BorderBrush="Transparent" VerticalAlignment="Center" Padding="0" Margin="0, 0, 5, 0" Grid.Column="1">
+						<TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Text="X"/>
+					</Button>
+				</Grid>
+
+				<Border BorderThickness="0, 0, 0, 1" BorderBrush="#750E21"></Border>
+
+				<TextBlock Padding="8" FontSize="13" Text="{Binding Description}"></TextBlock>
+
+				<Border BorderThickness="0, 0, 0, 1" BorderBrush="#750E21"></Border>
+
+				<ItemsControl ItemsSource="{Binding ButtonList}">
+					<ItemsControl.ItemsPanel>
+						<ItemsPanelTemplate>
+							<StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Center" Spacing="7" Margin="5"></StackPanel>
+						</ItemsPanelTemplate>
+					</ItemsControl.ItemsPanel>
+					<ItemsControl.ItemTemplate>
+						<DataTemplate>
+							<Button Command="{Binding OnClick}" Padding="10, 5" CornerRadius="2" BorderBrush="White" Background="{Binding ButtonBackground}" HorizontalAlignment="Center">
+								<TextBlock HorizontalAlignment="Center" Padding="2, 0, 2, 0" Text="{Binding Name}"></TextBlock>
+							</Button>
+						</DataTemplate>
+					</ItemsControl.ItemTemplate>
+				</ItemsControl>
+			</StackPanel>
+		</Border>
+	</Grid>
+</UserControl>

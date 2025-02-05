@@ -1,0 +1,51 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+			 mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="Desktop.LoginView">
+
+	<Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+		<Grid.Background>
+			<ImageBrush Source="/Assets/AuthBackground.png" Opacity="0.7" Stretch="Fill"></ImageBrush>
+		</Grid.Background>
+		
+		<Grid.RowDefinitions>
+			<RowDefinition Height="33*"/>
+			<RowDefinition Height="33*"/>
+			<RowDefinition Height="33*"/>
+		</Grid.RowDefinitions>
+		<Grid.ColumnDefinitions>
+			<ColumnDefinition Width="33*"/>
+			<ColumnDefinition Width="33*"/>
+			<ColumnDefinition Width="33*"/>
+		</Grid.ColumnDefinitions>
+
+		<StackPanel Grid.Row="1" Grid.Column="1">
+			<Border CornerRadius="10, 10, 0, 0" Background="#750E21" HorizontalAlignment="Stretch">
+				<DockPanel HorizontalAlignment="Stretch" >
+					<TextBlock Text="Login" FontSize="15" Padding="7" HorizontalAlignment="Center" Foreground="White"/>
+				</DockPanel>
+			</Border>
+			<Border Background="#141414" CornerRadius="0, 0, 10, 10">
+				<StackPanel Margin="20, 15, 20, 0">
+					<Label Foreground="White" FontSize="9" Padding="0">Username</Label>
+					<TextBox Text="{Binding Username}" Watermark="Username" Margin="0,0,0,10"/>
+					<Label Foreground="White" FontSize="9" Padding="0">Username</Label>
+					<TextBox Text="{Binding Password}" Watermark="Password" Margin="0,0,0,10" RevealPassword="True" PasswordChar="*"/>
+					
+					<StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
+						<TextBlock Text="Don't have an Account? Register " Foreground="White" FontSize="12">
+							<HyperlinkButton Command="{Binding GoToRegister}" Margin="0" Padding="0">here</HyperlinkButton>
+						</TextBlock>
+					</StackPanel>
+					
+					<Button Command="{Binding Login}" Background="#750E21" Foreground="White" CornerRadius="10" Margin="0,0,0,0" HorizontalAlignment="Stretch">
+						<Label HorizontalAlignment="Center" FontSize="10">Login</Label>
+					</Button>
+					<TextBlock Text="{Binding ErrorMessage}" Foreground="Red"/>
+				</StackPanel>
+			</Border>
+		</StackPanel>
+	</Grid>
+</UserControl>

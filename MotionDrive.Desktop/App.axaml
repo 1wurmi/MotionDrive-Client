@@ -1,0 +1,26 @@
+<Application xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             x:Class="Desktop.App"
+             RequestedThemeVariant="Default"
+			 xmlns:local="using:Desktop">
+             <!-- "Default" ThemeVariant follows system theme variant. "Dark" or "Light" are other available options. -->
+
+    <Application.Styles>
+        <FluentTheme />
+		<StyleInclude Source="avares://MotionDrive.Desktop/Assets/Icons.axaml"></StyleInclude>
+    </Application.Styles>
+
+	<TrayIcon.Icons>
+		<TrayIcons>
+			<TrayIcon Icon="/Assets/motionDrive-logo.ico" ToolTipText="MotionDrive" Clicked="NativeMenuItem_Click">
+				<TrayIcon.Menu>
+					<NativeMenu>
+						<NativeMenuItem Header="Open" Click="NativeMenuItem_Click"/>
+						<NativeMenuItemSeparator/>
+						<NativeMenuItem Header="Exit" Click="NativeMenuItem_Close"/>
+					</NativeMenu>
+				</TrayIcon.Menu>
+			</TrayIcon>
+		</TrayIcons>
+	</TrayIcon.Icons>
+</Application>

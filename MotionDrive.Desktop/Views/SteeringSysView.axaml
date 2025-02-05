@@ -1,0 +1,66 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="Desktop.SteeringSysView">
+ <Grid HorizontalAlignment="Center" VerticalAlignment="Top">
+    <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
+      <StackPanel Orientation="Vertical" Margin="10" Width="800">
+        <!-- Title -->
+        <TextBlock Text="FORCE FEEDBACK" FontWeight="Bold" Margin="0,0,0,5"/>
+
+        <!-- Enable Force Feedback Checkbox -->
+        <CheckBox Content="Enable Force Feedback" IsChecked="True" Margin="0,0,0,5"/>
+
+        <!-- Use linear mode and Reduce force when parked -->
+        <StackPanel Orientation="Horizontal" Margin="0,0,0,5">
+          <CheckBox Content="Use linear mode" Margin="0,0,10,0"/>
+          <CheckBox Content="Reduce force when parked" IsChecked="True"/>
+        </StackPanel>
+
+        <!-- Sliders and Labels -->
+        <Grid>
+          <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+          </Grid.RowDefinitions>
+          <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="150"/> <!-- Adjusted fixed width for labels -->
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="Auto"/>
+          </Grid.ColumnDefinitions>
+
+          <!-- Strength -->
+          <TextBlock Text="Strength:" Grid.Row="0" Margin="0,0,5,5"/>
+          <Slider Minimum="0" Maximum="10" Value="6" Grid.Row="0" Grid.Column="1" Margin="0,0,5,5"/>
+          <TextBox Text="6.0" Width="25" Height="20" Grid.Row="0" Grid.Column="2" Margin="0,0,0,5" HorizontalAlignment="Center"/>
+
+          <!-- Wheel force -->
+          <TextBlock Text="Wheel force:" Grid.Row="1" Margin="0,0,5,5"/>
+          <Slider Minimum="0" Maximum="10" Value="1" Grid.Row="1" Grid.Column="1" Margin="0,0,5,5"/>
+          <TextBox Text="1.0 Nm" Width="25" Height="20" Grid.Row="1" Grid.Column="2" Margin="0,0,0,5" HorizontalAlignment="Center"/>
+
+          <!-- Damping -->
+          <TextBlock Text="Damping:" Grid.Row="2" Margin="0,0,5,5"/>
+          <Slider Minimum="0" Maximum="100" Value="0" Grid.Row="2" Grid.Column="1" Margin="0,0,5,5"/>
+          <TextBox Text="0%" Width="25" Height="20" Grid.Row="2" Grid.Column="2" Margin="0,0,0,5" HorizontalAlignment="Center"/>
+
+          <!-- Min force -->
+          <TextBlock Text="Min force:" Grid.Row="3" Margin="0,0,5,5"/>
+          <Slider Minimum="0" Maximum="10" Value="0" Grid.Row="3" Grid.Column="1" Margin="0,0,5,5"/>
+          <TextBox Text="0.0%" Width="25" Height="20" Grid.Row="3" Grid.Column="2" Margin="0,0,0,5" HorizontalAlignment="Center"/>
+        </Grid>
+
+        <!-- Auto Reset Buttons -->
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,10,0,0">
+          <TextBlock Text="auto" Margin="0,0,10,0" VerticalAlignment="Center" Foreground="Gray"/>
+          <TextBlock Text="reset" Foreground="Red" Cursor="Hand"/>
+        </StackPanel>
+      </StackPanel>
+    </ScrollViewer>
+  </Grid>
+</UserControl>

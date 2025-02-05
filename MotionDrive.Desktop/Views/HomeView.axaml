@@ -1,0 +1,107 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+			 mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="Desktop.HomeView">
+	<Grid>
+		<SplitView IsPaneOpen="{Binding IsPaneOpen}"
+				   DisplayMode="CompactInline"
+				   OpenPaneLength="190"
+				   CompactPaneLength="40"
+			   PaneBackground="#141414">
+			<SplitView.Pane>
+				<Grid>
+					<Grid.ColumnDefinitions>
+						<ColumnDefinition Width="*"></ColumnDefinition>
+					</Grid.ColumnDefinitions>
+					<Grid.RowDefinitions>
+						<RowDefinition Height="Auto"></RowDefinition>
+						<RowDefinition Height="*"></RowDefinition>
+					</Grid.RowDefinitions>
+
+					<StackPanel VerticalAlignment="Stretch" Grid.Row="0">
+						<DockPanel HorizontalAlignment="Right">
+							<Button Command="{Binding TogglePane}" HorizontalAlignment="Stretch" DockPanel.Dock="Right" Margin="0, 0, 0, 10">
+								<PathIcon Data="{Binding PaneIcon}" Width="15" Height="15"></PathIcon>
+							</Button>
+						</DockPanel>
+
+						<Button Margin="0, 5, 0, 0" Command="{Binding NavigateToDashboard}" Name="DashboardBtn" Background="{Binding DashboardBackground}" HorizontalAlignment="Stretch" CornerRadius="0">
+							<DockPanel>
+								<PathIcon Margin="2, 0, 10, 0" Data="{StaticResource DashboardIcon}"></PathIcon>
+								<TextBlock>Dashboard</TextBlock>
+							</DockPanel>
+						</Button>
+						<Button Margin="0, 5, 0, 0"  Command="{Binding NavigateToFriends}" Name="FriendsBtn" Background="{Binding FriendsBackground}" HorizontalAlignment="Stretch" CornerRadius="0">
+							<DockPanel>
+								<PathIcon Margin="2, 0, 10, 0" Data="{StaticResource FriendsIcon}"></PathIcon>
+								<TextBlock>Friends</TextBlock>
+							</DockPanel>
+						</Button>
+						<Button Margin="0, 5, 0, 0"  Command="{Binding NavigateToTeams}" Name="TeamsBtn" Background="{Binding TeamsBackground}" HorizontalAlignment="Stretch" CornerRadius="0">
+							<DockPanel>
+								<PathIcon Margin="2, 0, 10, 0" Data="{StaticResource TeamsIcon}"></PathIcon>
+								<TextBlock>Teams</TextBlock>
+							</DockPanel>
+						</Button>
+						<Button Margin="0, 5, 0, 0"  Command="{Binding NavigateToSetups}" Name="SetupsBtn" Background="{Binding SetupsBackground}" HorizontalAlignment="Stretch" CornerRadius="0">
+							<DockPanel>
+								<PathIcon Margin="2, 0, 10, 0" Data="{StaticResource SetupsIcon}"></PathIcon>
+								<TextBlock>Setups</TextBlock>
+							</DockPanel>
+						</Button>
+						<Button Margin="0, 5, 0, 0"  Command="{Binding NavigateToTelemetry}" Name="TelemetryBtn" Background="{Binding TelemetryBackground}" HorizontalAlignment="Stretch" CornerRadius="0">
+							<DockPanel>
+								<PathIcon Margin="2, 0, 10, 0" Data="{StaticResource TelemetryIcon}"></PathIcon>
+								<TextBlock>Telemetry</TextBlock>
+							</DockPanel>
+						</Button>
+						<Button Margin="0, 5, 0, 0"  Command="{Binding NavigateToStrategy}" Name="StrategyBtn" Background="{Binding StrategyBackground}" HorizontalAlignment="Stretch" CornerRadius="0">
+							<DockPanel>
+								<PathIcon Margin="2, 0, 10, 0" Data="{StaticResource HeadsetIcon}"></PathIcon>
+								<TextBlock>Strategy</TextBlock>
+							</DockPanel>
+						</Button>
+						<Button Margin="0, 5, 0, 0"  Command="{Binding NavigateToMotionSys}" Name="MotionSysBtn" Background="{Binding MotionSysBackground}" HorizontalAlignment="Stretch" CornerRadius="0">
+							<DockPanel>
+								<PathIcon Margin="2, 0, 10, 0" Data=""></PathIcon>
+								<TextBlock>Motion System</TextBlock>
+							</DockPanel>
+						</Button>
+						<Button Margin="0, 5, 0, 0"  Command="{Binding NavigateToSteeringSys}" Name="SteeringBtn" Background="{Binding SteeringBackground}" HorizontalAlignment="Stretch" CornerRadius="0">
+							<DockPanel>
+								<PathIcon Margin="2, 0, 10, 0" Data=""></PathIcon>
+								<TextBlock>Steering</TextBlock>
+							</DockPanel>
+						</Button>
+					</StackPanel>
+					<DockPanel VerticalAlignment="Stretch" Grid.Row="1">
+						<StackPanel VerticalAlignment="Bottom" DockPanel.Dock="Bottom" >
+							<Button Margin="0, 5, 0, 0"  Command="{Binding NavigateToProfile}" Name="ProfileBtn" Background="{Binding ProfileBackground}" HorizontalAlignment="Stretch" CornerRadius="0">
+								<DockPanel>
+									<PathIcon Margin="2, 0, 10, 0" Data=""></PathIcon>
+									<TextBlock>Profile</TextBlock>
+								</DockPanel>
+							</Button>
+							<Button Margin="0, 5, 0, 0"  Command="{Binding NavigateToSettings}" Name="SettingsBtn" Background="{Binding SettingsBackground}" HorizontalAlignment="Stretch" CornerRadius="0">
+								<DockPanel>
+									<PathIcon Margin="2, 0, 10, 0" Data="{StaticResource SettingsIcon}"></PathIcon>
+									<TextBlock>Settings</TextBlock>
+								</DockPanel>
+							</Button>
+						</StackPanel>
+					</DockPanel>
+
+				</Grid>
+			</SplitView.Pane>
+			<SplitView.Content>
+				<Grid>
+					<ContentControl Content="{Binding CurrentView}"></ContentControl>
+				</Grid>
+			</SplitView.Content>
+		</SplitView>
+
+		<ContentControl Content="{Binding SaveReminderPopup}"></ContentControl>
+	</Grid>
+</UserControl>

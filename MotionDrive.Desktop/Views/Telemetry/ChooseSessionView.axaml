@@ -1,0 +1,92 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="MotionDrive.Desktop.ChooseSessionView">
+
+	<Grid Margin="5" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+		<Grid.RowDefinitions>
+			<RowDefinition Height="2*" />
+			<RowDefinition Height="20*" />
+		</Grid.RowDefinitions>
+
+		<Border Background="#333333" Grid.Row="0" Grid.ColumnSpan="3" Grid.Column="0" CornerRadius="4" Margin="0, 0, 0, 5">
+			<TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="White" FontSize="30" FontWeight="Bold">Choose Session</TextBlock>
+		</Border>
+
+		<Border Background="#333333" Grid.Row="1" Grid.RowSpan="5" Grid.Column="0" CornerRadius="4" Margin="0,0,5,0" VerticalAlignment="Stretch" x:Name="ChooseSessionField">
+			<StackPanel HorizontalAlignment="Stretch">
+				<ItemsControl ItemsSource="{Binding FolderCards}" IsVisible="{Binding !CanShowFiles}">
+					<ItemsControl.ItemsPanel>
+						<ItemsPanelTemplate>
+							<WrapPanel Orientation="Horizontal"/>
+						</ItemsPanelTemplate>
+					</ItemsControl.ItemsPanel>
+					<ItemsControl.ItemTemplate>
+						<DataTemplate>
+							<Button Background="#474747" CornerRadius="10" Padding="7" Margin="0, 5, 5, 0" Command="{Binding DataContext.GetTelemetryFilesCommand, RelativeSource={RelativeSource AncestorType=ItemsControl}}" CommandParameter="{Binding}">
+								<TextBlock Text="{Binding FolderName}"/>
+							</Button>
+						</DataTemplate>
+					</ItemsControl.ItemTemplate>
+				</ItemsControl>
+				<StackPanel Orientation="Horizontal" IsVisible="{Binding CanShowFiles}" Margin="10, 2, 10, 5">
+					<Button Command="{Binding GoToChooseFolderPage}" Content="Back" Background="#4D4D4D" Foreground="White" Width="100"
+							HorizontalAlignment="Left" Margin="8,0,0,0" CornerRadius="5" HorizontalContentAlignment="Center"/>
+
+					<TextBox Width="200" Watermark="Search..." Text="XYZ" ToolTip.Tip="Coming Soon" IsEnabled="False" ToolTip.ShowOnDisabled="True"/>
+
+					<ComboBox Width="150" PlaceholderText="Filter" ToolTip.Tip="Coming Soon" IsEnabled="False">
+					</ComboBox>
+				</StackPanel>
+				<ScrollViewer Margin="10, 0, 10, 5" Height="600">
+					<ItemsControl ItemsSource="{Binding Files}" IsVisible="{Binding CanShowFiles}">
+						<ItemsControl.ItemsPanel>
+							<ItemsPanelTemplate>
+								<StackPanel Orientation="Vertical" HorizontalAlignment="Stretch"/>
+							</ItemsPanelTemplate>
+						</ItemsControl.ItemsPanel>
+						<ItemsControl.ItemTemplate>
+							<DataTemplate>
+								<Button CornerRadius="8" Margin="0,10,0,0" HorizontalAlignment="Stretch" Command="{Binding DataContext.GoToTelemetryCommand, RelativeSource={RelativeSource AncestorType=ItemsControl}}" CommandParameter="{Binding Path}">
+									<Button.Styles>
+										<Style Selector="Border">
+											<Setter Property="Background" Value="#444444" />
+											<Setter Property="Padding" Value="10" />
+											<Setter Property="Transitions">
+												<Transitions>
+													<DoubleTransition Property="Width" Duration="0:0:0.2" />
+												</Transitions>
+											</Setter>
+										</Style>
+										<Style Selector="Border:pointerover">
+											<Setter Property="Background" Value="#555555" />
+										</Style>
+									</Button.Styles>
+
+									<Grid>
+										<Grid.ColumnDefinitions>
+											<ColumnDefinition Width="2*" />
+											<ColumnDefinition Width="2"/>
+											<ColumnDefinition Width="*" />
+											<ColumnDefinition Width="2"/>
+											<ColumnDefinition Width="2*" />
+											<ColumnDefinition Width="2"/>
+											<ColumnDefinition Width="2*" />
+											<ColumnDefinition Width="2"/>
+										</Grid.ColumnDefinitions>
+										<TextBlock Grid.Column="0" Text="{Binding Date, StringFormat=yyyy-MM-dd hh:mm}" Foreground="White" TextTrimming="CharacterEllipsis" />
+										<TextBlock Grid.Column="2" Text="{Binding SessionType}" Foreground="White" TextTrimming="CharacterEllipsis" />
+										<TextBlock Grid.Column="4" Text="{Binding CarName}" Foreground="White" TextTrimming="CharacterEllipsis" />
+										<TextBlock Grid.Column="6" Text="{Binding TrackName}" Foreground="White" TextTrimming="CharacterEllipsis" />
+									</Grid>
+								</Button>
+							</DataTemplate>
+						</ItemsControl.ItemTemplate>
+					</ItemsControl>
+				</ScrollViewer>
+			</StackPanel>
+		</Border>
+	</Grid>
+</UserControl>

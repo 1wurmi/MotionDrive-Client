@@ -1,0 +1,42 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:rxui="http://reactiveui.net"
+		xmlns:app="clr-namespace:Desktop"
+        xmlns:vm="using:Desktop.ViewModels"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:views="clr-namespace:Desktop.Views"
+        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+		MinHeight="600" MinWidth="900"
+        x:Class="Desktop.Views.MainWindow"
+        Icon="/Assets/motionDrive-logo.ico"
+        Title="MotionDrive"
+		ExtendClientAreaToDecorationsHint="True">
+	
+	<Grid>
+		<Grid.RowDefinitions>
+			<RowDefinition Height="30" />
+			<RowDefinition Height="*" />
+		</Grid.RowDefinitions>
+		<Grid.ColumnDefinitions>
+			<ColumnDefinition Width="*"/>
+		</Grid.ColumnDefinitions>
+
+
+		<DockPanel IsHitTestVisible="False" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="10" Background="#750E21">
+			<TextBlock Margin="10,0,0,0" FontWeight="Bold" Background="Transparent" Foreground="White" VerticalAlignment="Center">MotionDrive</TextBlock>
+		</DockPanel>
+
+		<rxui:RoutedViewHost Grid.Row="1" Router="{Binding Router}">
+			<rxui:RoutedViewHost.DefaultContent>
+				<TextBlock Text="Default content"
+                           HorizontalAlignment="Center"
+                           VerticalAlignment="Center" />
+			</rxui:RoutedViewHost.DefaultContent>
+			<rxui:RoutedViewHost.ViewLocator>
+				<!-- See AppViewLocator.cs section below -->
+				<app:AppViewLocator />
+			</rxui:RoutedViewHost.ViewLocator>
+		</rxui:RoutedViewHost>
+	</Grid>
+</Window>

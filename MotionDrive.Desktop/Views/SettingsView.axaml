@@ -1,0 +1,88 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="Desktop.SettingsView">
+  <Grid HorizontalAlignment="Center" VerticalAlignment="Top">
+    <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
+      <StackPanel Orientation="Vertical" Margin="10" Width="800">
+		  <!-- Save Button -->
+		  <DockPanel HorizontalAlignment="Right">
+			  <Button Background="#141414" Margin="0, 0, 5, 0" Command="{Binding CopyConfigToClipboard}">
+				  <TextBlock Text="Import Config"></TextBlock>
+			  </Button>
+			  <Button Background="#141414" Margin="0, 0, 5, 0" Command="{Binding CopyConfigToClipboard}">
+				  <TextBlock Text="Copy Config"></TextBlock>
+			  </Button>
+			  <Button Background="#750E21" Command="{Binding Save}">
+				  <TextBlock Text="Save"></TextBlock>
+			  </Button>
+		  </DockPanel>
+        <StackPanel Margin="0 10 0 0">
+          <TextBlock Text="Theme Selection" FontSize="16" FontWeight="Bold" Margin="0 0 0 5"/>
+          <Border BorderBrush="Gray" BorderThickness="1" CornerRadius="5" Padding="10">
+            <StackPanel>
+              <TextBlock Text="Select Theme:"/>
+              <ComboBox IsEnabled="False">
+                <ComboBoxItem>Light Theme</ComboBoxItem>
+                <ComboBoxItem>Dark Theme</ComboBoxItem>
+              </ComboBox>
+            </StackPanel>
+          </Border>
+        </StackPanel>
+
+        <!-- Text Size Selection -->
+        <StackPanel Margin="0 10 0 0">
+          <TextBlock Text="Text Size" FontSize="16" FontWeight="Bold" Margin="0 0 0 5"/>
+          <Border BorderBrush="Gray" BorderThickness="1" CornerRadius="5" Padding="10">
+            <StackPanel>
+              <TextBlock Text="Select Text Size:"/>
+              <ComboBox IsEnabled="False">
+                <ComboBoxItem>Small</ComboBoxItem>
+                <ComboBoxItem>Medium</ComboBoxItem>
+                <ComboBoxItem>Large</ComboBoxItem>
+              </ComboBox>
+            </StackPanel>
+          </Border>
+        </StackPanel>
+
+        <StackPanel Margin="0 10 0 0">
+	        <TextBlock Text="Display Exe path" FontSize="16" FontWeight="Bold" Margin="0 0 0 5"/>
+	        <Border BorderBrush="Gray" BorderThickness="1" CornerRadius="5" Padding="10">
+		        <StackPanel>
+			        <TextBlock Text="Select Display Exe Path:"/>
+			        <StackPanel Orientation="Horizontal" Spacing="10">
+				        <Button Content="Browse..." Command="{Binding SelectDisplayExePathCommand}"/>
+				        <TextBox Text="{Binding LoadedConfig.DisplayExePath}" IsReadOnly="True" Width="400"/>
+			        </StackPanel>
+		        </StackPanel>
+	        </Border>
+        </StackPanel>
+
+        <!-- Game Paths -->
+        <StackPanel Margin="0 10 0 0">
+          <TextBlock Text="Game Paths" FontSize="16" FontWeight="Bold" Margin="0 0 0 5"/>
+          <Border BorderBrush="Gray" BorderThickness="1" CornerRadius="5" Padding="10">
+            <StackPanel>
+              <TextBlock Text="Select AC Executable Path:"/>
+              <StackPanel Orientation="Horizontal" Spacing="10">
+                <Button Content="Browse..." Command="{Binding SelectACGamePathCommand}"/>
+                <TextBox Text="{Binding LoadedConfig.Executables.ACPath}" IsReadOnly="True" Width="400"/>
+              </StackPanel>
+            </StackPanel>
+          </Border>
+		  <Border BorderBrush="Gray" BorderThickness="1" CornerRadius="5" Padding="10" Margin="0, 5, 0, 0">
+            <StackPanel>
+              <TextBlock Text="Select ACC Executable Path:"/>
+              <StackPanel Orientation="Horizontal" Spacing="10">
+                <Button Content="Browse..." Command="{Binding SelectACCGamePathCommand}"/>
+                <TextBox Text="{Binding LoadedConfig.Executables.ACCPath}" IsReadOnly="True" Width="400"/>
+              </StackPanel>
+            </StackPanel>
+          </Border>
+        </StackPanel>
+      </StackPanel>
+    </ScrollViewer>
+  </Grid>
+</UserControl>

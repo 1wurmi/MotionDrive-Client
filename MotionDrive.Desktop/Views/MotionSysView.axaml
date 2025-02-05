@@ -1,0 +1,23 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="Desktop.MotionSysView">
+	<Grid>
+		<Border HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Padding="5" Margin="5" Background="#333333" CornerRadius="8">
+			<ScrollViewer HorizontalScrollBarVisibility="" VerticalScrollBarVisibility="Auto">
+				<!-- Display -->
+				<Border>
+					<StackPanel>
+
+						<TextBlock Text="Display" FontSize="15" FontWeight="Bold"></TextBlock>
+						<Button Command="{Binding Start}" Content="Start"></Button>
+						<Button Command="{Binding Stop}" Content="Stop"></Button>
+					</StackPanel>
+				</Border>
+			</ScrollViewer>
+		</Border>
+	</Grid>
+	
+</UserControl>
