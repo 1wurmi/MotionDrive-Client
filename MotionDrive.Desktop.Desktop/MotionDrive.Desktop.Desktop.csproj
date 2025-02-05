@@ -15,7 +15,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Desktop\MotionDrive.Desktop.csproj" />
+    <ProjectReference Include="..\MotionDrive.Desktop\MotionDrive.Desktop.csproj" />
   </ItemGroup>
 
   <ItemGroup>

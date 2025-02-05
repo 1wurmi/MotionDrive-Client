@@ -42,7 +42,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Recorder\MotionDrive.Recorder.csproj" />
+    <ProjectReference Include="..\MotionDrive.Recorder\MotionDrive.Recorder.csproj" />
   </ItemGroup>
 
   <ItemGroup>
