@@ -1,4 +1,5 @@
-﻿using Recorder.ACC;
+﻿using MotionDrive.Recorder.iRacing;
+using Recorder.ACC;
 using Recorder.Enum;
 using System;
 using System.Collections.Generic;
@@ -23,6 +24,13 @@ public class Recorder
     {
         get { return _currentGame; }
         set { _currentGame = value; }
+    }
+
+    public string _currentProcessName = "";
+    public string CurrentProcessName
+    {
+        get { return _currentProcessName; }
+        set { _currentProcessName = value; }
     }
 
     public IGameRecorder? CurrentGameRecorder = null;
@@ -50,11 +58,19 @@ public class Recorder
                     {
                         CurrentGame = Game.AC;
                         this.CurrentGameRecorder = new ACC.ACC();
+                        this.CurrentProcessName = "acs";
                     }
                     else if (process.ProcessName == "acc")
                     {
                         CurrentGame = Game.ACC;
                         this.CurrentGameRecorder = new ACC.ACC();
+                        this.CurrentProcessName = "acc";
+                    }
+                    else if (process.ProcessName == "iRacingSim64DX11")
+                    {
+                        CurrentGame = Game.IRACING;
+                        this.CurrentGameRecorder = new iRacing();
+                        this.CurrentProcessName = "iRacingSim64DX11";
                     }
                 }
 
@@ -72,19 +88,14 @@ public class Recorder
     }
     public void GameStillRunning()
     {
-        if (this.CurrentGame == null) return;
+        if (this.CurrentGame == null || this.CurrentGameRecorder == null) return;
 
-        switch (this.CurrentGame)
+        if (Process.GetProcessesByName(this.CurrentProcessName).Length == 0)
         {
-            case Game.AC:
-                if (Process.GetProcessesByName("acs").Length == 0)
-                {
-                    this.CurrentGameRecorder.StopAsync(cancellationTokenSource);
-                    this.CurrentGameRecorder = null;
-                    this.CurrentGame = null;
-                    this.ResetCancellationToken();
-                }
-                break;
+            this.CurrentGameRecorder.StopAsync(cancellationTokenSource);
+            this.CurrentGameRecorder = null;
+            this.CurrentGame = null;
+            this.ResetCancellationToken();
         }
     }
 
