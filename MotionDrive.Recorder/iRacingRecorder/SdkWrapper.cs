@@ -18,7 +18,7 @@ internal class SdkWrapper
         this.context = SynchronizationContext.Current;
         sdk = new iRacingSDK();
 
-        this.TelemetryUpdateFrequency = 10;
+        this.TelemetryUpdateFrequency = 50;
 
         _DriverId = -1;
     }

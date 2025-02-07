@@ -10,5 +10,6 @@ public enum SessionType
     RACE,
     QUALIFYING,
     PRACTICE,
-    HOTLAP
+    HOTLAP,
+    OFFLINE_TESTING
 }
