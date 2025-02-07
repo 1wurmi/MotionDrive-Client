@@ -33,6 +33,7 @@
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="9.0.1" />
     <PackageReference Include="PSC.CSharp.Library.CountryData" Version="8.0.9" />
     <PackageReference Include="System.Security.Cryptography.ProtectedData" Version="9.0.1" />
+    <PackageReference Include="YamlDotNet" Version="16.3.0" />
   </ItemGroup>
 
   <ItemGroup>
