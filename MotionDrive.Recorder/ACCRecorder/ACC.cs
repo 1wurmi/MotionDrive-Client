@@ -83,7 +83,7 @@ internal class ACC : IGameRecorder
                     break;
             }
 
-            rm.NewSessionStarted(e.StaticInfo.CarModel, e.StaticInfo.Track, st);
+            rm.NewSessionStarted(e.StaticInfo.CarModel, e.StaticInfo.Track, st, Game.ACC);
         }
 
         if (e.Graphics.IsInPit == 0)

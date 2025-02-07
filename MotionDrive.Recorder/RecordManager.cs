@@ -21,7 +21,7 @@ public class RecordManager
     public string? SaveDir { get; set; }
 
     // MANUALLY REGISTER A NEW SESSION
-    public void NewSessionStarted(string carName, string trackName, SessionType sessionType)
+    public void NewSessionStarted(string carName, string trackName, SessionType sessionType, Game gameName)
     {
         if (CurrentSession != null)
         {
@@ -93,10 +93,10 @@ public class RecordManager
             fileName = $"/{sessToUse.SessionType.ToString()}{DateTime.Now.ToString("MM_dd_yyyy_HH_mm")}.json";
 
 
-            string filePath = SaveDir + fileName;
+            string filePath = SaveDir + fileName + "/" + sessToUse.gameName;
             File.WriteAllText(filePath, jsonString);
 
-            File.WriteAllText(filePath + ":meta.json", JsonSerializer.Serialize(new { fastestLapTime }));
+            File.WriteAllText(filePath + ":meta.json", JsonSerializer.Serialize(new { fastestLapTime, sessToUse.gameName }));
 
             return;
         });
