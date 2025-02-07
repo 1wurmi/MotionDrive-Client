@@ -1,8 +1,6 @@
-﻿using Microsoft.Extensions.Logging;
-using MotionDrive.Recorder.ACCRecorder;
+﻿using MotionDrive.Recorder.ACCRecorder;
 using MotionDrive.Recorder.ACCRecorder.SharedMemory;
 using MotionDrive.Recorder.iRacingRecorder.SharedMemory;
-using SVappsLAB.iRacingTelemetrySDK;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;

@@ -1,7 +1,6 @@
 ﻿using Avalonia.Controls;
 using Desktop.Models;
 using ReactiveUI;
-using Recorder.Model;
 using System.Diagnostics;
 
 namespace MotionDrive.Desktop.ViewModels.Telemetry;

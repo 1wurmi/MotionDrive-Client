@@ -6,6 +6,7 @@ using Desktop.Views;
 using Microsoft.Extensions.DependencyInjection;
 using MotionDrive.Desktop;
 using MotionDrive.Desktop.ViewModels;
+using MotionDrive.Recorder;
 using System;
 using System.Diagnostics;
 using System.IO;
@@ -16,7 +17,7 @@ using System.Threading.Tasks;
 namespace Desktop;
 public partial class App : Application
 {
-    MotionDrive.Recorder.Recorder recorder = new Recorder.Recorder()
+    MotionDrive.Recorder.Recorder recorder = new Recorder()
     {
         SaveDir = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "MotionDrive")
     };
