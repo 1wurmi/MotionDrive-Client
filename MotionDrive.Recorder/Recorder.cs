@@ -1,8 +1,9 @@
-﻿using MotionDrive.Recorder.iRacing;
-using Recorder.Enum;
-using System.Diagnostics;
+﻿using System.Diagnostics;
+using MotionDrive.Recorder.ACCRecorder;
+using MotionDrive.Recorder.Enum;
+using MotionDrive.Recorder.iRacingRecorder;
 
-namespace Recorder;
+namespace MotionDrive.Recorder;
 public class Recorder
 {
     private string _saveDir = "";
@@ -33,12 +34,12 @@ public class Recorder
 
     public void StartRecorder()
     {
-        this.ResetCancellationToken();
+        ResetCancellationToken();
 
         while (true)
         {
 
-            if (this.CurrentGameRecorder != null)
+            if (CurrentGameRecorder != null)
             {
                 GameStillRunning();
             }
@@ -50,51 +51,51 @@ public class Recorder
                     if (process.ProcessName == "acs")
                     {
                         CurrentGame = Game.AC;
-                        this.CurrentGameRecorder = new ACC.ACC();
-                        this.CurrentProcessName = "acs";
+                        CurrentGameRecorder = new ACC();
+                        CurrentProcessName = "acs";
                     }
                     else if (process.ProcessName == "acc")
                     {
                         CurrentGame = Game.ACC;
-                        this.CurrentGameRecorder = new ACC.ACC();
-                        this.CurrentProcessName = "acc";
+                        CurrentGameRecorder = new ACC();
+                        CurrentProcessName = "acc";
                     }
                     else if (process.ProcessName == "iRacingSim64DX11")
                     {
                         CurrentGame = Game.IRACING;
-                        this.CurrentGameRecorder = new iRacing();
-                        this.CurrentProcessName = "iRacingSim64DX11";
+                        CurrentGameRecorder = new iRacing();
+                        CurrentProcessName = "iRacingSim64DX11";
                     }
                 }
 
-                if (this.CurrentGameRecorder != null)
-                    this.CurrentGameRecorder.RunAsync(this.SaveDir, cancellationToken);
+                if (CurrentGameRecorder != null)
+                    CurrentGameRecorder.RunAsync(SaveDir, cancellationToken);
             }
         }
     }
 
     public void StopRecording(bool hasToWrite)
     {
-        if (this.CurrentGameRecorder != null)
-            this.CurrentGameRecorder.StopAsync(cancellationTokenSource, hasToWrite);
+        if (CurrentGameRecorder != null)
+            CurrentGameRecorder.StopAsync(cancellationTokenSource, hasToWrite);
         cancellationTokenSource.Cancel();
     }
     public void GameStillRunning()
     {
-        if (this.CurrentGame == null || this.CurrentGameRecorder == null) return;
+        if (CurrentGame == null || CurrentGameRecorder == null) return;
 
-        if (Process.GetProcessesByName(this.CurrentProcessName).Length == 0)
+        if (Process.GetProcessesByName(CurrentProcessName).Length == 0)
         {
-            this.CurrentGameRecorder.StopAsync(cancellationTokenSource);
-            this.CurrentGameRecorder = null;
-            this.CurrentGame = null;
-            this.ResetCancellationToken();
+            CurrentGameRecorder.StopAsync(cancellationTokenSource);
+            CurrentGameRecorder = null;
+            CurrentGame = null;
+            ResetCancellationToken();
         }
     }
 
     public void ResetCancellationToken()
     {
-        this.cancellationTokenSource = new CancellationTokenSource();
-        this.cancellationToken = this.cancellationTokenSource.Token;
+        cancellationTokenSource = new CancellationTokenSource();
+        cancellationToken = cancellationTokenSource.Token;
     }
 }

@@ -5,7 +5,7 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Recorder.ACC.SharedMemory.Models;
+namespace MotionDrive.Recorder.ACCRecorder.SharedMemory.Models;
 public class StaticInfoEventArgs : EventArgs
 {
     public StaticInfoEventArgs(StaticInfo staticInfo)

@@ -1,5 +1,5 @@
-﻿using Recorder.Enum;
-using Recorder.Model;
+﻿using MotionDrive.Recorder.Enum;
+using MotionDrive.Recorder.Model;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -10,7 +10,7 @@ using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
 
-namespace Recorder;
+namespace MotionDrive.Recorder;
 // THIS CLASS MANAGES EVERYTHING RELATED TO MANAGING RECORDED DATA AND WRITING TO FILE
 // ALSO IDENTIFIES IF NEW LAP STARTED, BASED ON DATA FROM OTHER CLASS
 public class RecordManager
@@ -37,7 +37,7 @@ public class RecordManager
             SessionType = sessionType
         };
 
-        this.CurrentSession.Laps.Add(new Lap() { LapName = "Lap " + this.CurrentSession.Laps.Count });
+        CurrentSession.Laps.Add(new Lap() { LapName = "Lap " + CurrentSession.Laps.Count });
     }
 
     private TelemetryPacket? oldPacket = null;
@@ -50,21 +50,21 @@ public class RecordManager
 
             if (tp.Time < oldPacket.Time)
             {
-                this.CurrentSession.Laps.Last().isValid = oldPacket.isValidLap;
-                this.CurrentSession.Laps.Last().LapTime = tp.iLastTime;
+                CurrentSession.Laps.Last().isValid = oldPacket.isValidLap;
+                CurrentSession.Laps.Last().LapTime = tp.iLastTime;
 
-                this.AddNewLap(new Lap() { LapName = "Lap " + tp.completedLaps });
+                AddNewLap(new Lap() { LapName = "Lap " + tp.completedLaps });
             }
         }
 
         oldPacket = tp;
 
-        this.CurrentSession.Laps.Last().TelemetryPackets.Add(tp);
+        CurrentSession.Laps.Last().TelemetryPackets.Add(tp);
     }
 
     private void AddNewLap(Lap lap)
     {
-        this.CurrentSession.Laps.Add(lap);
+        CurrentSession.Laps.Add(lap);
     }
 
     public Task WriteToFile(bool manuallyStopped = false)
@@ -93,10 +93,10 @@ public class RecordManager
             fileName = $"/{sessToUse.SessionType.ToString()}{DateTime.Now.ToString("MM_dd_yyyy_HH_mm")}.json";
 
 
-            string filePath = this.SaveDir + fileName;
+            string filePath = SaveDir + fileName;
             File.WriteAllText(filePath, jsonString);
 
-            File.WriteAllText(filePath + ":meta.json", JsonSerializer.Serialize(new { fastestLapTime = fastestLapTime }));
+            File.WriteAllText(filePath + ":meta.json", JsonSerializer.Serialize(new { fastestLapTime }));
 
             return;
         });

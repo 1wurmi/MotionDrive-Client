@@ -1,15 +1,10 @@
-﻿using Recorder.ACC.SharedMemory;
-using Recorder.ACC.SharedMemory.Models;
-using Recorder.Enum;
-using Recorder.Model;
-using System;
-using System.Collections.Generic;
+﻿using MotionDrive.Recorder.ACCRecorder.SharedMemory;
+using MotionDrive.Recorder.ACCRecorder.SharedMemory.Models;
+using MotionDrive.Recorder.Enum;
+using MotionDrive.Recorder.Model;
 using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace Recorder.ACC;
+namespace MotionDrive.Recorder.ACCRecorder;
 internal class ACC : IGameRecorder
 {
     ACCSharedMemoryReader accr;
@@ -36,27 +31,27 @@ internal class ACC : IGameRecorder
     {
         Trace.WriteLine("STOPPING ACC");
 
-        this.StopReading();
+        StopReading();
         source.Cancel();
 
         if (hasToWrite)
-            this.rm.WriteToFile(true).Start();
+            rm.WriteToFile(true).Start();
 
         Trace.WriteLine("STOPPED");
     }
 
     public void Read()
     {
-        this.accr = new ACCSharedMemoryReader(1000, 100, 100, 100);
+        accr = new ACCSharedMemoryReader(1000, 100, 100, 100);
 
-        this.accr.EverythingUpdated += OnEverythingUpdated;
+        accr.EverythingUpdated += OnEverythingUpdated;
 
-        this.accr.Start();
+        accr.Start();
     }
 
     public void StopReading()
     {
-        this.accr.Stop();
+        accr.Stop();
     }
 
     public int? CurrentSessionIndex;

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Recorder.Enum;
+namespace MotionDrive.Recorder.Enum;
 public enum SessionType
 {
     RACE,

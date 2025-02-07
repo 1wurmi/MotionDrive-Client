@@ -1,11 +1,10 @@
-﻿using Recorder;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MotionDrive.Recorder.iRacing;
+namespace MotionDrive.Recorder.iRacingRecorder;
 internal class iRacing : IGameRecorder
 {
     public void Read()

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Recorder.Model;
+namespace MotionDrive.Recorder.Model;
 public class Lap
 {
     public List<TelemetryPacket> TelemetryPackets { get; set; } = new List<TelemetryPacket>();

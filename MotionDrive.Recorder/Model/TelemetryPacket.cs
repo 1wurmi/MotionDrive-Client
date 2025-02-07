@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Recorder.Model;
+namespace MotionDrive.Recorder.Model;
 public class TelemetryPacket
 {
     // CURRENT LAP TIME IN MILLISECONDS
@@ -36,8 +36,8 @@ public class TelemetryPacket
             $"Clutch: {Clutch}, \n" +
             $"Steering: {Steering}, \n" +
             $"RPM: {RPM}, \n" +
-            $"Tyre Wear: {this.TyreWear.ToString()}, \n" +
-            $"Brake Temp: {this.BrakeTemp.ToString()}, \n" +
-            $"Tyre Pressure: {this.TyrePressure.ToString()}, \n";
+            $"Tyre Wear: {TyreWear.ToString()}, \n" +
+            $"Brake Temp: {BrakeTemp.ToString()}, \n" +
+            $"Tyre Pressure: {TyrePressure.ToString()}, \n";
     }
 }

@@ -1,4 +1,4 @@
-﻿using Recorder.ACC.SharedMemory.Models;
+﻿using MotionDrive.Recorder.ACCRecorder.SharedMemory.Models;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -8,7 +8,7 @@ using System.Runtime.InteropServices;
 using System.Timers;
 using Timer = System.Timers.Timer;
 
-namespace Recorder.ACC.SharedMemory;
+namespace MotionDrive.Recorder.ACCRecorder.SharedMemory;
 internal class ACCSharedMemoryReader
 {
 

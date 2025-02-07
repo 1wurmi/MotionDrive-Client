@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Recorder.ACC.SharedMemory.Models;
+namespace MotionDrive.Recorder.ACCRecorder.SharedMemory.Models;
 public class CarData
 {
     public float BrakeBias;

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Recorder;
+namespace MotionDrive.Recorder;
 public interface IGameRecorder
 {
     Task RunAsync(string saveDir, CancellationToken token);
