@@ -10,4 +10,5 @@ public interface IGameRecorder
     Task RunAsync(string saveDir, CancellationToken token);
     Task StopAsync(CancellationTokenSource token, bool hasToWrite = true);
     public void Read();
+    public void StopReading();
 }
