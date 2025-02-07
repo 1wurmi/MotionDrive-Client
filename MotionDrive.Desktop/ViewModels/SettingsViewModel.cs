@@ -72,6 +72,11 @@ public class SettingsViewModel : ReactiveObject
         this.LoadedConfig.Executables.ACCPath = await OpenFileExplorer(true);
     }
 
+    public async void SelectIRacingPathCommand()
+    {
+        this.LoadedConfig.Executables.IRacingPath = await OpenFileExplorer(true);
+    }
+
     public async void SelectDisplayExePathCommand()
     {
         this.LoadedConfig.DisplayExePath = await OpenFileExplorer(true);

@@ -39,6 +39,11 @@ public class DashboardViewModel : ReactiveObject
         {
             ShortCutList.Add(new ShortCut() { Name = "Assetto Corsa Competizione", Icon = "acc.png", Path = executables.ACCPath, ProcessName = "acc" });
         }
+        if (executables.IRacingPath != null && executables.IRacingPath != "")
+        {
+            // INFO: Might not work on all computers ... (not sure)
+           ShortCutList.Add(new ShortCut() { Name = "iRacing", Icon = "iracing.png", Path = executables.IRacingPath, ProcessName = "iRacingSim64DX11" });
+        }
     }
 }
 

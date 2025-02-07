@@ -18,6 +18,7 @@ public class Executables : INotifyPropertyChanged
 {
     private string? _acPath;
     private string? _accPath;
+    private string? _iracingPath;
 
     public string? ACPath
     {
@@ -34,6 +35,16 @@ public class Executables : INotifyPropertyChanged
         set
         {
             this._accPath = value;
+            OnPropertyChanged();
+        }
+    }
+
+    public string? IRacingPath
+    {
+        get { return _iracingPath; }
+        set
+        {
+            this._iracingPath = value;
             OnPropertyChanged();
         }
     }
