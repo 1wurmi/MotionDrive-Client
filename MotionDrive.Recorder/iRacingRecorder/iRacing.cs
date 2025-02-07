@@ -1,24 +1,27 @@
 ﻿using MotionDrive.Recorder.ACCRecorder;
 using MotionDrive.Recorder.ACCRecorder.SharedMemory;
-using MotionDrive.Recorder.iRacingRecorder.SharedMemory;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static MotionDrive.Recorder.iRacingRecorder.SdkWrapper;
 
 namespace MotionDrive.Recorder.iRacingRecorder;
 internal class iRacing : IGameRecorder
 {
-    iRacingSharedMemoryReader irsmr;
     RecordManager rm = new RecordManager();
+    SdkWrapper wrapper = new SdkWrapper();
     public void Read()
     {
+        this.wrapper.TelemetryUpdated += this.OnTelemetryUpdated;
 
+        this.wrapper.Start();
     }
     public void StopReading()
     {
+        this.wrapper.Stop();
     }
 
     public Task RunAsync(string saveDir, CancellationToken token)
@@ -52,4 +55,8 @@ internal class iRacing : IGameRecorder
         Trace.WriteLine("iRacing STOPPED");
     }
 
+    private void OnTelemetryUpdated(object sender, TelemetryUpdatedEventArgs e)
+    {
+        Trace.WriteLine(e.TelemetryInfo.Throttle);   
+    }
 }
