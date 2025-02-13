@@ -22,7 +22,7 @@ using static System.Net.WebRequestMethods;
 namespace MotionDrive.Desktop.ViewModels;
 public class SplashViewModel : ReactiveObject
 {
-    private static readonly string updateURL = "https://localhost:7239/appcast.xml";
+    private static readonly string updateURL = "/update/appcast";
     public bool IsLoggedIn { get; set; } = false;
 
     public string _statusText;
@@ -58,15 +58,52 @@ public class SplashViewModel : ReactiveObject
     private void BackgroundWorker_DoWork(object sender, DoWorkEventArgs e)
     {
         BackgroundWorker worker = sender as BackgroundWorker;
-        this.CheckForUpdates(worker);
-        this.TryLogIn(worker);
+        if (worker == null) return;
+
+        // Erst Updates prüfen
+        if (!CheckForUpdates(worker).Result)
+        {
+            // Falls kein Update, weiter mit Login
+            TryLogIn(worker);
+        }
     }
 
-    public async void CheckForUpdates(BackgroundWorker worker)
+    public async Task<bool> CheckForUpdates(BackgroundWorker worker)
     {
-        
-        var sparkle = new SparkleUpdater(updateURL, new Ed25519Checker(SecurityMode.Unsafe));
-        await sparkle.CheckForUpdatesAtUserRequest();
+#if DEBUG
+        this.StatusText = "DEVELOPMENT MODE - SKIPPING UPDATE CHECK";
+        Thread.Sleep(1000);
+        worker.ReportProgress(30);
+        return false; // Skip updates in development
+#endif
+
+
+        this.StatusText = "CHECKING FOR UPDATES ...";
+        Thread.Sleep(100);
+        worker.ReportProgress(10);
+
+        var sparkle = new SparkleUpdater(this.configManager.LoadConfig().APIUrl + updateURL, new Ed25519Checker(SecurityMode.Unsafe));
+
+        // Update-Status abrufen
+        var updateInfo = await sparkle.CheckForUpdatesQuietly();
+
+        if (updateInfo.Status == UpdateStatus.UpdateAvailable)
+        {
+            this.StatusText = "UPDATE FOUND. INSTALLING...";
+            worker.ReportProgress(20);
+            Thread.Sleep(500);
+
+            // Update-Installation starten
+            await sparkle.InitAndBeginDownload(updateInfo.Updates.First());
+
+            // Nach der Installation App neustarten
+            Environment.Exit(0);
+            return true; // Update wurde ausgeführt
+        }
+
+        this.StatusText = "NO UPDATE FOUND. CONTINUING...";
+        worker.ReportProgress(30);
+        return false; // Kein Update -> weiter mit Login
     }
 
     public async void TryLogIn(BackgroundWorker worker)
