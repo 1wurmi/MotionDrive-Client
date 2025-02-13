@@ -1,7 +1,11 @@
-﻿using Desktop.ViewModels;
+﻿using Chaos.NaCl;
+using Desktop.ViewModels;
 using MotionDrive.Desktop.Config;
 using MotionDrive.Desktop.Models;
 using MotionDrive.Desktop.SecrectsConfig;
+using NetSparkleUpdater;
+using NetSparkleUpdater.Enums;
+using NetSparkleUpdater.SignatureVerifiers;
 using ReactiveUI;
 using System;
 using System.Collections.Generic;
@@ -13,10 +17,12 @@ using System.Text;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using static System.Net.WebRequestMethods;
 
 namespace MotionDrive.Desktop.ViewModels;
 public class SplashViewModel : ReactiveObject
 {
+    private static readonly string updateURL = "https://localhost:7239/appcast.xml";
     public bool IsLoggedIn { get; set; } = false;
 
     public string _statusText;
@@ -52,9 +58,16 @@ public class SplashViewModel : ReactiveObject
     private void BackgroundWorker_DoWork(object sender, DoWorkEventArgs e)
     {
         BackgroundWorker worker = sender as BackgroundWorker;
+        this.CheckForUpdates(worker);
         this.TryLogIn(worker);
     }
 
+    public async void CheckForUpdates(BackgroundWorker worker)
+    {
+        
+        var sparkle = new SparkleUpdater(updateURL, new Ed25519Checker(SecurityMode.Unsafe));
+        await sparkle.CheckForUpdatesAtUserRequest();
+    }
 
     public async void TryLogIn(BackgroundWorker worker)
     {
