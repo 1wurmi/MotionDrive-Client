@@ -71,7 +71,7 @@ public class SplashViewModel : ReactiveObject
 #if DEBUG
         this.StatusText = "DEVELOPMENT MODE - SKIPPING UPDATE CHECK";
         Thread.Sleep(1000);
-        worker.ReportProgress(30);
+        this.SetProgessValue(30);
         return false; // Skip updates in development
 #endif
 
