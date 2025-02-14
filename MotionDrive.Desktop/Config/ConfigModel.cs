@@ -10,7 +10,7 @@ namespace MotionDrive.Desktop.Config;
 public class ConfigModel
 {
     public Executables Executables { get; set; } = new Executables();
-    public string APIUrl { get; set; } = "https://localhost:7239/api";
+    public string APIUrl { get; set; } = "https://motiondriveapiservice.azure-api.net/api/api";
     public string DisplayExePath { get; set; } = "../MotionDrive.DesktopApplication/bin/Debug/net8.0/MotionDrive.DisplayApplication.Exe";
 }
 
