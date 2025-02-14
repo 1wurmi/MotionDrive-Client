@@ -48,12 +48,8 @@ public partial class App : Application
             };
             desktop.MainWindow = splashWindow;
 
-            vmContext.backgroundWorker.RunWorkerAsync();
+            vmContext.DoWork();
 
-            while (vmContext.backgroundWorker.IsBusy)
-            {
-                await Task.Delay(100);
-            }
             Trace.WriteLine(vmContext.IsLoggedIn);
 
             desktop.MainWindow = new MainWindow

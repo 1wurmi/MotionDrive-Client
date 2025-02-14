@@ -1,4 +1,5 @@
-﻿using Chaos.NaCl;
+﻿using Avalonia.Threading;
+using Chaos.NaCl;
 using Desktop.ViewModels;
 using MotionDrive.Desktop.Config;
 using MotionDrive.Desktop.Models;
@@ -41,35 +42,32 @@ public class SplashViewModel : ReactiveObject
     private SecretsManager secretsManager = new SecretsManager();
     private ConfigManager configManager = new ConfigManager();
 
-    public BackgroundWorker backgroundWorker = new BackgroundWorker();
 
     public SplashViewModel()
     {
-        backgroundWorker.WorkerReportsProgress = true;
-        backgroundWorker.DoWork += new DoWorkEventHandler(BackgroundWorker_DoWork);
-        backgroundWorker.ProgressChanged += new ProgressChangedEventHandler(BackgroundWorker_ProgressChanged);
+
     }
 
-    private void BackgroundWorker_ProgressChanged(object? sender, ProgressChangedEventArgs e)
+    private void SetProgessValue(int value)
     {
-        this.ProgressValue = e.ProgressPercentage;
+        this.ProgressValue = value;
     }
 
-    private void BackgroundWorker_DoWork(object sender, DoWorkEventArgs e)
+    public async void DoWork()
     {
-        BackgroundWorker worker = sender as BackgroundWorker;
-        if (worker == null) return;
+        var updateCheck = await CheckForUpdates();
 
         // Erst Updates prüfen
-        if (!CheckForUpdates(worker).Result)
+        if (!updateCheck)
         {
             // Falls kein Update, weiter mit Login
-            TryLogIn(worker);
+            TryLogIn();
         }
     }
 
-    public async Task<bool> CheckForUpdates(BackgroundWorker worker)
+    public async Task<bool> CheckForUpdates()
     {
+
 #if DEBUG
         this.StatusText = "DEVELOPMENT MODE - SKIPPING UPDATE CHECK";
         Thread.Sleep(1000);
@@ -77,12 +75,17 @@ public class SplashViewModel : ReactiveObject
         return false; // Skip updates in development
 #endif
 
-
         this.StatusText = "CHECKING FOR UPDATES ...";
         Thread.Sleep(100);
-        worker.ReportProgress(10);
+        this.SetProgessValue(10);
 
-        var sparkle = new SparkleUpdater(this.configManager.LoadConfig().APIUrl + updateURL, new Ed25519Checker(SecurityMode.Unsafe));
+        var sparkle = new SparkleUpdater(this.configManager.LoadConfig().APIUrl + updateURL, new Ed25519Checker(SecurityMode.Unsafe))
+        {
+            UIFactory = new NetSparkleUpdater.UI.Avalonia.UIFactory(),
+            RelaunchAfterUpdate = true,
+            LogWriter = new LogWriter(),
+            UserInteractionMode = UserInteractionMode.DownloadAndInstall,
+        };
 
         // Update-Status abrufen
         var updateInfo = await sparkle.CheckForUpdatesQuietly();
@@ -90,28 +93,28 @@ public class SplashViewModel : ReactiveObject
         if (updateInfo.Status == UpdateStatus.UpdateAvailable)
         {
             this.StatusText = "UPDATE FOUND. INSTALLING...";
-            worker.ReportProgress(20);
+            this.SetProgessValue(20);
             Thread.Sleep(500);
 
             // Update-Installation starten
             await sparkle.InitAndBeginDownload(updateInfo.Updates.First());
+            //await sparkle.InstallUpdate(updateInfo.Updates.First());
 
-            // Nach der Installation App neustarten
             Environment.Exit(0);
             return true; // Update wurde ausgeführt
         }
 
         this.StatusText = "NO UPDATE FOUND. CONTINUING...";
-        worker.ReportProgress(30);
+        this.SetProgessValue(30);
         return false; // Kein Update -> weiter mit Login
     }
 
-    public async void TryLogIn(BackgroundWorker worker)
+    public async void TryLogIn()
     {
         this.StatusText = "TRYING TO LOG IN ...";
         Thread.Sleep(500); // Has to be, because server is not starting fast enough
 
-        worker.ReportProgress(33);
+        this.SetProgessValue(33);
 
         Thread.Sleep(500); // Has to be, because server is not starting fast enough
 
@@ -123,7 +126,7 @@ public class SplashViewModel : ReactiveObject
         http.BaseAddress = new Uri(loadedConfig.APIUrl);
         HttpResponseMessage response = http.PostAsync("api/auth/refresh", new StringContent($"{{\"RefreshToken\":\"{secrets.RefreshToken}\",\"AccessToken\":\"{secrets.JWT}\"}}", Encoding.UTF8, "application/json")).Result;
 
-        worker.ReportProgress(66);
+        this.SetProgessValue(66);
 
         Thread.Sleep(500); // Has to be, because server is not starting fast enough
 
@@ -131,7 +134,7 @@ public class SplashViewModel : ReactiveObject
 
         if (rm.successFull)
         {
-            worker.ReportProgress(100);
+            this.SetProgessValue(100);
 
             secretsManager.SaveSecrets(new SecretConfigModel()
             {
