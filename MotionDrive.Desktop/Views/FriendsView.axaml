@@ -23,7 +23,7 @@
 		</Grid.ColumnDefinitions>
 
 		<!-- Left Sidebar -->
-		<Border Grid.Row="0" Grid.Column="0" Background="#3d3d3d" Padding="10" CornerRadius="5">
+		<Border Grid.Row="0" Grid.Column="0" Background="#3d3d3d" Padding="5,10,5,0" CornerRadius="5">
 			<!-- Dynamic List of User Buttons -->
 			<Grid>
 				<Grid.RowDefinitions>
@@ -34,31 +34,51 @@
 					<RowDefinition Height="40" />
 					<!-- Gift Icon -->
 				</Grid.RowDefinitions>
-				<Border Grid.Row="0" BorderBrush="Transparent" BorderThickness="2" Margin="2" CornerRadius="3">
-					<Grid>
-						<Grid.ColumnDefinitions>
-							<ColumnDefinition Width="40" />
-							<!-- Icon Column -->
-							<ColumnDefinition Width="*" />
-							<!-- Text Column -->
-							<ColumnDefinition Width="80" />
-							<!-- Button Column -->
-						</Grid.ColumnDefinitions>
-						
-						<!-- LEFT image -->
-						<!-- UserName -->
-						<!-- Button to remove friend, etc. -->
+				<Button HorizontalAlignment="Stretch">
+					<Border Grid.Row="0" BorderBrush="Transparent" BorderThickness="2" Margin="2" CornerRadius="3">
+						<Grid>
+							<Grid.ColumnDefinitions>
+								<ColumnDefinition Width="40" />
+								<!-- Icon Column -->
+								<ColumnDefinition Width="*" />
+								<!-- Text Column -->
+								<ColumnDefinition Width="40" />
+								<!-- Button Column -->
+							</Grid.ColumnDefinitions>
 
-						<Image Grid.Column="0" Width="30" Height="30" asyncImageLoader:ImageLoader.Source="https://res.cloudinary.com/motiondrive/image/upload/default"></Image>
-						<TextBlock Grid.Column="1" Text="UserName" VerticalAlignment="Center" Foreground="White" />
-						<Button Grid.Column="2" Content="+" Width="30" Height="30" Margin="10, 0, 0, 0"/>
+							<!-- LEFT image -->
+							<!-- UserName -->
+							<!-- Button to remove friend, etc. -->
 
-					</Grid>
-				</Border>
+							<Image Margin="-5,0,0,0" Grid.Column="0" Width="30" Height="30" asyncImageLoader:ImageLoader.Source="https://res.cloudinary.com/motiondrive/image/upload/default"></Image>
+							<TextBlock Grid.Column="1" Text="UserName" VerticalAlignment="Center" Foreground="White" />
+							<Button Grid.Column="2" Background="Transparent" Width="30" Height="30" Margin="10, 0, 0, 0" HorizontalAlignment="Right">
+								<TextBlock Text="⋮" FontWeight="Bold" HorizontalAlignment="Center"></TextBlock>
+							</Button>
+
+						</Grid>
+					</Border>
+				</Button>
 			</Grid>
 		</Border>
 
-		<!-- Main Content Area -->
+		<Border Grid.Row="2" Grid.Column="0" Background="#3d3d3d" Padding="10" CornerRadius="5">
+			<!-- Textfield to enter Friend Code + button to send request -->
+			<Grid>
+				<Grid.ColumnDefinitions>
+					<ColumnDefinition Width="*" />
+					<!-- Text Input -->
+					<ColumnDefinition Width="40" />
+					<!-- Gift Icon -->
+				</Grid.ColumnDefinitions>
+				<TextBox Grid.Column="0" Watermark="Freundescode eingeben" Background="#40444B" Foreground="White" />
+				<Button Grid.Column="1" Width="30" Height="30" Margin="10, 0, 0, 0">
+					<TextBlock Text="+" TextAlignment="Center" HorizontalAlignment="Stretch" />
+				</Button>
+			</Grid>
+		</Border>
+
+			<!-- Main Content Area -->
 		<Border Grid.Row="0" Grid.Column="2" BorderBrush="Black" Background="#3d3d3d" CornerRadius="5">
 			<!-- Content goes here -->
 		</Border>
