@@ -5,6 +5,7 @@ using Desktop.ViewModels;
 using Desktop.Views;
 using Microsoft.Extensions.DependencyInjection;
 using MotionDrive.Desktop;
+using MotionDrive.Desktop.Services;
 using MotionDrive.Desktop.ViewModels;
 using Recorder;
 using System;
@@ -38,6 +39,7 @@ public partial class App : Application
     public override async void OnFrameworkInitializationCompleted()
     {
         var services = new ServiceCollection();
+        services.AddSingleton<FriendsService>();
 
         if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
         {
@@ -49,8 +51,6 @@ public partial class App : Application
             desktop.MainWindow = splashWindow;
 
             vmContext.DoWork();
-
-            Trace.WriteLine(vmContext.IsLoggedIn);
 
             desktop.MainWindow = new MainWindow
             {
