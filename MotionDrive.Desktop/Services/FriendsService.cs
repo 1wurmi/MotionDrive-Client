@@ -9,6 +9,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Net.Http.Json;
 using System.Text;
+using System.Text.Json;
 using System.Threading.Tasks;
 
 namespace MotionDrive.Desktop.Services;
@@ -58,7 +59,7 @@ public class FriendsService
         {
             client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", loadedSecrets.JWT);
             var response = await client.GetStringAsync(loadedConfig.APIUrl + "/friends");
-            var friendsList = System.Text.Json.JsonSerializer.Deserialize<List<Friend>>(response);
+            var friendsList = JsonSerializer.Deserialize<List<Friend>>(response, new JsonSerializerOptions() { PropertyNameCaseInsensitive=true});
 
             Friends.Clear();
             foreach (var friend in friendsList)

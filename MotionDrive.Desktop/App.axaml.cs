@@ -5,6 +5,7 @@ using Desktop.ViewModels;
 using Desktop.Views;
 using Microsoft.Extensions.DependencyInjection;
 using MotionDrive.Desktop;
+using MotionDrive.Desktop.Converter;
 using MotionDrive.Desktop.Services;
 using MotionDrive.Desktop.ViewModels;
 using Recorder;
@@ -32,7 +33,7 @@ public partial class App : Application
 
         AvaloniaXamlLoader.Load(this);
 
-        // TODO READ SAVE DIR FROM CONFIG
+        Resources["OnlineStatusConverter"] = new OnlineStatusConverter();
 
     }
 
