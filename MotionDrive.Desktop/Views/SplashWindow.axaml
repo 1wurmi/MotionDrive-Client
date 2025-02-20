@@ -8,7 +8,7 @@
 		SystemDecorations="None"
 		Height="130"
 		Width="600"
-		Topmost="False"
+		Topmost="True"
 		HorizontalAlignment="Center"
 		VerticalAlignment="Center"
 		WindowStartupLocation="CenterScreen"

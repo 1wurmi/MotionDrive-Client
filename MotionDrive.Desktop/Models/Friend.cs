@@ -9,5 +9,6 @@ public class Friend
 {
     public string Id { get; set; }
     public string Name { get; set; }
-    public string profilePicture { get; set; }
+    public string ProfilePictureURL { get; set; }
+    public bool IsOnline { get; set; } = false;
 }

@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.SignalR.Client;
 using MotionDrive.Desktop.Config;
 using MotionDrive.Desktop.Models;
+using MotionDrive.Desktop.SecrectsConfig;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -16,6 +17,9 @@ public class FriendsService
     private static FriendsService? _instance;
     private ConfigManager cm = new ConfigManager();
     private ConfigModel loadedConfig;
+
+    private SecretsManager sm = new SecretsManager();
+    private SecretConfigModel loadedSecrets;
     public static FriendsService Instance => _instance ??= new FriendsService();
     
     public ObservableCollection<Friend> Friends = new ObservableCollection<Friend>();
@@ -25,10 +29,21 @@ public class FriendsService
     private FriendsService()
     {
         loadedConfig = cm.LoadConfig();
+        loadedSecrets = sm.LoadSecrets();
+
         _hubConnection = new HubConnectionBuilder()
-            .WithUrl(loadedConfig.APIUrl + "/friendshub")
+            .WithUrl(loadedConfig.APIUrl + "/friendsHub?access_token="+loadedSecrets.JWT)
             .WithAutomaticReconnect()
             .Build();
+
+        _hubConnection.On<Friend>("UserStatusChanged", friend =>
+        {
+            var existingFriend = Friends.FirstOrDefault(f => f.Id == friend.Id);
+            if (existingFriend != null)
+            {
+                existingFriend.IsOnline = friend.IsOnline;
+            }
+        });
     }
 
     public async Task InitializeAsync()
@@ -41,7 +56,8 @@ public class FriendsService
     {
         using (var client = new System.Net.Http.HttpClient())
         {
-            var response = await client.GetStringAsync(loadedConfig.APIUrl + "api/friends");
+            client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", loadedSecrets.JWT);
+            var response = await client.GetStringAsync(loadedConfig.APIUrl + "/friends");
             var friendsList = System.Text.Json.JsonSerializer.Deserialize<List<Friend>>(response);
 
             Friends.Clear();
@@ -70,7 +86,7 @@ public class FriendsService
     {
         using (var client = new System.Net.Http.HttpClient())
         {
-            var response = await client.DeleteAsync($"https://yourserver.com/api/friends/{friendId}");
+            var response = await client.DeleteAsync(loadedConfig.APIUrl + $"/api/friends/{friendId}");
             if (response.IsSuccessStatusCode)
             {
                 await FetchFriendsAsync();

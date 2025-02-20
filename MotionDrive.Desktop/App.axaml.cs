@@ -39,7 +39,6 @@ public partial class App : Application
     public override async void OnFrameworkInitializationCompleted()
     {
         var services = new ServiceCollection();
-        services.AddSingleton<FriendsService>();
 
         if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
         {
@@ -49,8 +48,9 @@ public partial class App : Application
                 DataContext = vmContext
             };
             desktop.MainWindow = splashWindow;
+            desktop.MainWindow.Show();
 
-            vmContext.DoWork();
+            await vmContext.DoWork();
 
             desktop.MainWindow = new MainWindow
             {
