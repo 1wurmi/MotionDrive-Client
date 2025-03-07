@@ -70,11 +70,11 @@ public class FriendsService
     }
 
     // Add a friend (can be triggered from the UI or other services)
-    public async Task AddFriendAsync(string friendCode)
+    public async Task RequestFriendAsync(string friendCode)
     {
         using (var client = new System.Net.Http.HttpClient())
         {
-            var response = await client.PostAsJsonAsync(loadedConfig.APIUrl  + "/api/friends", friendCode);
+            var response = await client.PostAsJsonAsync(loadedConfig.APIUrl  + "/api/friends/request", friendCode);
             if (response.IsSuccessStatusCode)
             {
                 await FetchFriendsAsync();
