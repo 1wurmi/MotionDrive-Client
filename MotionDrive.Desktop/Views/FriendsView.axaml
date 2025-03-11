@@ -90,8 +90,8 @@
 					<ColumnDefinition Width="40" />
 					<!-- Gift Icon -->
 				</Grid.ColumnDefinitions>
-				<TextBox Grid.Column="0" Watermark="Freundescode eingeben" Background="#40444B" Foreground="White" />
-				<Button Grid.Column="1" Width="30" Height="30" Margin="10, 0, 0, 0">
+				<TextBox Text="{Binding FriendCode}" Grid.Column="0" Watermark="Freundescode eingeben" Background="#40444B" Foreground="White" />
+				<Button Grid.Column="1" Width="30" Height="30" Margin="10, 0, 0, 0" Command="{Binding RequestFriendAsync}">
 					<TextBlock Text="+" TextAlignment="Center" HorizontalAlignment="Stretch" />
 				</Button>
 			</Grid>

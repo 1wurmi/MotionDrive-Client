@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Linq;
+using System.Net.Http;
 using System.Net.Http.Json;
 using System.Text;
 using System.Text.Json;
@@ -69,20 +70,32 @@ public class FriendsService
         }
     }
 
-    // Add a friend (can be triggered from the UI or other services)
     public async Task RequestFriendAsync(string friendCode)
     {
         using (var client = new System.Net.Http.HttpClient())
         {
-            var response = await client.PostAsJsonAsync(loadedConfig.APIUrl  + "/api/friends/request", friendCode);
+            client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", loadedSecrets.JWT);
+            var response = await client.PostAsync(loadedConfig.APIUrl  + "/friends/request", new StringContent($"{{\"friendCode\":\"{friendCode}\"}}", Encoding.UTF8, "application/json"));
             if (response.IsSuccessStatusCode)
             {
                 await FetchFriendsAsync();
             }
+            else
+            {
+                Debug.WriteLine("Failed to send friend request");
+            }
         }
     }
 
-    // Remove a friend (can be triggered from the UI or other services)
+    public async Task AcceptFriendAsync(string acceptId)
+    {
+        // Accept ID => Id the request has gotten from server
+    }
+    public async Task DeclineFriendAsync(string acceptId)
+    {
+        // Accept ID => Id the request has gotten from server
+    }
+
     public async Task RemoveFriendAsync(string friendId)
     {
         using (var client = new System.Net.Http.HttpClient())

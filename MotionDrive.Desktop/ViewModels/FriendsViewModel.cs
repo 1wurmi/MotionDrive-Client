@@ -13,10 +13,22 @@ public class FriendsViewModel : ReactiveObject
 {
     IScreen HostScreen { get; }
 
+    private string _friendCode;
+    public string FriendCode
+    {
+        get => _friendCode ?? "";
+        set => this.RaiseAndSetIfChanged(ref _friendCode, value);
+    }
+
+    public FriendsService FriendsService => FriendsService.Instance;
     public ObservableCollection<Friend> Friends => FriendsService.Instance.Friends;
 
     public FriendsViewModel(IScreen screen)
     {
         HostScreen = screen;
+    }
+    public void RequestFriendAsync()
+    {
+        this.FriendsService.RequestFriendAsync(FriendCode);
     }
 }
