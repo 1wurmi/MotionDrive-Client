@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Json;
@@ -25,6 +26,7 @@ public class FriendsService
     public static FriendsService Instance => _instance ??= new FriendsService();
     
     public ObservableCollection<Friend> Friends = new ObservableCollection<Friend>();
+    public ObservableCollection<FriendRequest> FriendRequests = new ObservableCollection<FriendRequest>();
 
     private HubConnection _hubConnection;
 
@@ -51,6 +53,7 @@ public class FriendsService
     public async Task InitializeAsync()
     {
         await FetchFriendsAsync();  // Load friends from the API
+        await FetchFriendRequestsAsync();
         await _hubConnection.StartAsync();  // Connect to the SignalR hub
     }
 
@@ -70,7 +73,23 @@ public class FriendsService
         }
     }
 
-    public async Task RequestFriendAsync(string friendCode)
+    private async Task FetchFriendRequestsAsync()
+    {
+        using (var client = new System.Net.Http.HttpClient())
+        {
+            client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", loadedSecrets.JWT);
+            var response = await client.GetStringAsync(loadedConfig.APIUrl + "/friends/requests");
+            var requestList = JsonSerializer.Deserialize<List<FriendRequest>>(response, new JsonSerializerOptions() { PropertyNameCaseInsensitive = true });
+
+            FriendRequests.Clear();
+            foreach (var friend in requestList)
+            {
+                FriendRequests.Add(friend);  // Populate the friends list
+            }
+        }
+    }
+
+    public async Task<bool> RequestFriendAsync(string friendCode)
     {
         using (var client = new System.Net.Http.HttpClient())
         {
@@ -79,10 +98,11 @@ public class FriendsService
             if (response.IsSuccessStatusCode)
             {
                 await FetchFriendsAsync();
+                return true;
             }
             else
             {
-                Debug.WriteLine("Failed to send friend request");
+                return false;
             }
         }
     }
