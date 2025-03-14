@@ -115,7 +115,7 @@ public class FriendsService
             var response = await client.PutAsync(loadedConfig.APIUrl + "/friends/accept", new StringContent($"{{\"requestId\":\"{requestId}\"}}", Encoding.UTF8, "application/json"));
             if (response.IsSuccessStatusCode)
             {
-                await FetchFriendsAsync();
+                await InitializeAsync();
             }
         }
     }
@@ -125,6 +125,8 @@ public class FriendsService
         {
             client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", loadedSecrets.JWT);
             var response = await client.PutAsync(loadedConfig.APIUrl + "/friends/decline", new StringContent($"{{\"requestId\":\"{requestId}\"}}", Encoding.UTF8, "application/json"));
+            if (response.IsSuccessStatusCode)
+                await InitializeAsync();
         }
     }
 
