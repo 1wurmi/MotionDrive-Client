@@ -84,7 +84,7 @@ public class FriendsService
             FriendRequests.Clear();
             foreach (var friend in requestList)
             {
-                FriendRequests.Add(friend);  // Populate the friends list
+                FriendRequests.Add(friend); 
             }
         }
     }
@@ -107,13 +107,25 @@ public class FriendsService
         }
     }
 
-    public async Task AcceptFriendAsync(string acceptId)
+    public async Task AcceptFriendAsync(string requestId)
     {
-        // Accept ID => Id the request has gotten from server
+        using (var client = new System.Net.Http.HttpClient())
+        {
+            client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", loadedSecrets.JWT);
+            var response = await client.PutAsync(loadedConfig.APIUrl + "/friends/accept", new StringContent($"{{\"requestId\":\"{requestId}\"}}", Encoding.UTF8, "application/json"));
+            if (response.IsSuccessStatusCode)
+            {
+                await FetchFriendsAsync();
+            }
+        }
     }
-    public async Task DeclineFriendAsync(string acceptId)
+    public async Task DeclineFriendAsync(string requestId)
     {
-        // Accept ID => Id the request has gotten from server
+        using (var client = new System.Net.Http.HttpClient())
+        {
+            client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", loadedSecrets.JWT);
+            var response = await client.PutAsync(loadedConfig.APIUrl + "/friends/decline", new StringContent($"{{\"requestId\":\"{requestId}\"}}", Encoding.UTF8, "application/json"));
+        }
     }
 
     public async Task RemoveFriendAsync(string friendId)

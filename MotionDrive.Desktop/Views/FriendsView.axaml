@@ -121,7 +121,7 @@
 											</Grid>
 
 											<TextBlock Grid.Column="1" Text="{Binding UserName}" VerticalAlignment="Center" Foreground="White" />
-											<Button Grid.Column="2" Command="">
+											<Button Grid.Column="2" Command="{Binding DataContext.AcceptFriendAsync, RelativeSource={RelativeSource AncestorType=ItemsControl}}" CommandParameter="{Binding RequestId}">
 												<Svg Path="/Assets/check-solid.svg" Width="13" Height="13" />
 											</Button>
 

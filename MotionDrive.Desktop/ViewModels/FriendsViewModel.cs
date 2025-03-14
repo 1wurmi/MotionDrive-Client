@@ -8,6 +8,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Input;
 
 namespace Desktop.ViewModels;
 public class FriendsViewModel : ReactiveObject
@@ -32,9 +33,16 @@ public class FriendsViewModel : ReactiveObject
     public ObservableCollection<Friend> Friends => FriendsService.Instance.Friends;
     public ObservableCollection<FriendRequest> FriendRequests => FriendsService.Instance.FriendRequests;
 
+    public ICommand AcceptFriendAsync { get; }
+    public ICommand DeclineFriendAsync { get; }
+
     public FriendsViewModel(IScreen screen)
     {
         HostScreen = screen;
+        this.FriendsService.InitializeAsync();
+
+        AcceptFriendAsync = ReactiveCommand.CreateFromTask<string>(this.AcceptFriendRequestAsync);
+        DeclineFriendAsync = ReactiveCommand.CreateFromTask<string>(this.DeclineFriendRequestAsync);
     }
     public async Task RequestFriendAsync()
     {
@@ -47,5 +55,15 @@ public class FriendsViewModel : ReactiveObject
         {
             HasError = true;
         }
+    }
+
+    public async Task AcceptFriendRequestAsync(string requestId)
+    {
+        await this.FriendsService.AcceptFriendAsync(requestId);
+    }
+
+    public async Task DeclineFriendRequestAsync(string requestId)
+    {
+        await this.FriendsService.DeclineFriendAsync(requestId);
     }
 }
