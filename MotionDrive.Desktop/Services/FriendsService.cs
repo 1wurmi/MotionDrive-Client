@@ -53,7 +53,6 @@ public class FriendsService
                 existingFriend.IsOnline = isOnline;
             }
         });
-
         Task.Run(async () => await StartOnlineStatusPollingAsync());
     }
 
