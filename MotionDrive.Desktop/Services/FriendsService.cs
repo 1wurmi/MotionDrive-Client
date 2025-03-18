@@ -12,6 +12,7 @@ using System.Net.Http;
 using System.Net.Http.Json;
 using System.Text;
 using System.Text.Json;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace MotionDrive.Desktop.Services;
@@ -29,6 +30,8 @@ public class FriendsService
     public ObservableCollection<FriendRequest> FriendRequests = new ObservableCollection<FriendRequest>();
 
     private HubConnection _hubConnection;
+    private CancellationTokenSource _cts = new CancellationTokenSource();
+
 
     private FriendsService()
     {
@@ -40,21 +43,33 @@ public class FriendsService
             .WithAutomaticReconnect()
             .Build();
 
-        _hubConnection.On<Friend>("UserStatusChanged", friend =>
+        _hubConnection.On<string, bool>("ReceiveUserStatus", (userId, isOnline) =>
         {
-            var existingFriend = Friends.FirstOrDefault(f => f.Id == friend.Id);
+            var existingFriend = Friends.FirstOrDefault(f => f.Id == userId);
             if (existingFriend != null)
             {
-                existingFriend.IsOnline = friend.IsOnline;
+                Trace.WriteLine("AYO IS ONLINE ODER SO BROW");
+                Trace.WriteLine(isOnline);
+                existingFriend.IsOnline = isOnline;
             }
         });
+
+        Task.Run(async () => await StartOnlineStatusPollingAsync());
     }
 
     public async Task InitializeAsync()
     {
-        await FetchFriendsAsync();  // Load friends from the API
+        await FetchFriendsAsync(); 
         await FetchFriendRequestsAsync();
-        await _hubConnection.StartAsync();  // Connect to the SignalR hub
+        await _hubConnection.StartAsync();
+    }
+
+    private async Task GetFriendsOnlineStatusAsync()
+    {
+        foreach (Friend friend in Friends)
+        {
+            await _hubConnection.SendAsync("IsUserOnline", friend.Id);
+        }
     }
 
     private async Task FetchFriendsAsync()
@@ -63,12 +78,30 @@ public class FriendsService
         {
             client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", loadedSecrets.JWT);
             var response = await client.GetStringAsync(loadedConfig.APIUrl + "/friends");
-            var friendsList = JsonSerializer.Deserialize<List<Friend>>(response, new JsonSerializerOptions() { PropertyNameCaseInsensitive=true});
+            var newFriendsList = JsonSerializer.Deserialize<List<Friend>>(response, new JsonSerializerOptions() { PropertyNameCaseInsensitive=true});
 
-            Friends.Clear();
-            foreach (var friend in friendsList)
+            // Find removed friends
+            var removedFriends = Friends.Where(f => !newFriendsList.Any(nf => nf.Id == f.Id)).ToList();
+            foreach (var friend in removedFriends)
             {
-                Friends.Add(friend);  // Populate the friends list
+                Friends.Remove(friend);
+            }
+
+            // Find new friends
+            var newFriends = newFriendsList.Where(nf => !Friends.Any(f => f.Id == nf.Id)).ToList();
+            foreach (var friend in newFriends)
+            {
+                Friends.Add(friend);
+            }
+
+            // Update existing friends (e.g., online status, name changes, etc.)
+            foreach (var existingFriend in Friends)
+            {
+                var updatedFriend = newFriendsList.FirstOrDefault(nf => nf.Id == existingFriend.Id);
+                if (updatedFriend != null)
+                {
+                    existingFriend.UserName = updatedFriend.UserName;
+                }
             }
         }
     }
@@ -140,6 +173,33 @@ public class FriendsService
                 await FetchFriendsAsync();
             }
         }
+    }
+
+    public async Task StartOnlineStatusPollingAsync()
+    {
+        _cts = new CancellationTokenSource();
+
+        while (!_cts.Token.IsCancellationRequested)
+        {
+            try
+            {
+                await GetFriendsOnlineStatusAsync();  // Get the status of friends
+                await Task.Delay(5000, _cts.Token);  // Wait for 5 seconds
+            }
+            catch (TaskCanceledException)
+            {
+                break; // Exit loop when cancellation is requested
+            }
+            catch (Exception ex)
+            {
+                Trace.WriteLine($"Polling Error: {ex.Message}");
+            }
+        }
+    }
+
+    public void StopOnlineStatusPolling()
+    {
+        _cts.Cancel();
     }
 
 }
