@@ -4,6 +4,7 @@ using Desktop.ViewModels;
 using MotionDrive.Desktop.Config;
 using MotionDrive.Desktop.Models;
 using MotionDrive.Desktop.SecrectsConfig;
+using MotionDrive.Desktop.Services;
 using NetSparkleUpdater;
 using NetSparkleUpdater.Enums;
 using NetSparkleUpdater.SignatureVerifiers;
@@ -53,7 +54,7 @@ public class SplashViewModel : ReactiveObject
         this.ProgressValue = value;
     }
 
-    public async void DoWork()
+    public async Task DoWork()
     {
         var updateCheck = await CheckForUpdates();
 
@@ -62,6 +63,10 @@ public class SplashViewModel : ReactiveObject
         {
             // Falls kein Update, weiter mit Login
             TryLogIn();
+
+
+            // TODO GET FRIENDS IF LOGIN WAS SUCESSFULL
+            await FriendsService.Instance.InitializeAsync();
         }
     }
 
@@ -71,7 +76,7 @@ public class SplashViewModel : ReactiveObject
 #if DEBUG
         this.StatusText = "DEVELOPMENT MODE - SKIPPING UPDATE CHECK";
         Thread.Sleep(1000);
-        this.SetProgessValue(30);
+        this.SetProgessValue(10);
         return false; // Skip updates in development
 #endif
 
@@ -109,7 +114,7 @@ public class SplashViewModel : ReactiveObject
         return false; // Kein Update -> weiter mit Login
     }
 
-    public async void TryLogIn()
+    public void TryLogIn()
     {
         this.StatusText = "TRYING TO LOG IN ...";
         Thread.Sleep(500); // Has to be, because server is not starting fast enough

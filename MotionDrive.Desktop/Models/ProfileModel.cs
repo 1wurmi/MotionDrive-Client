@@ -16,5 +16,6 @@ public class ProfileModel
     public string? favouriteTrack { get; set; }
     public string? favouriteGame { get; set; }
     public string? favouriteCarClass { get; set; }
+    public string? friendCode { get; set; }
     public bool canEdit { get; set; }
 }

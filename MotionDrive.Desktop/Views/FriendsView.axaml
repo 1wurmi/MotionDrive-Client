@@ -5,6 +5,7 @@
 			 xmlns:asyncImageLoader="clr-namespace:AsyncImageLoader;assembly=AsyncImageLoader.Avalonia"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="Desktop.FriendsView">
+
 	<Grid Margin="5">
 		<!-- Define Row and Column Sizes -->
 		<Grid.RowDefinitions>
@@ -24,42 +25,118 @@
 
 		<!-- Left Sidebar -->
 		<Border Grid.Row="0" Grid.Column="0" Background="#3d3d3d" Padding="5,10,5,0" CornerRadius="5">
+			<StackPanel>
+				<ItemsControl ItemsSource="{Binding Friends}">
+					<ItemsControl.ItemTemplate>
+						<DataTemplate>
+							<Grid>
+								<Grid.RowDefinitions>
+									<RowDefinition Height="40" />
+									<!-- Text Input -->
+									<RowDefinition Height="40" />
+									<!-- Gift Icon -->
+									<RowDefinition Height="40" />
+									<!-- Gift Icon -->
+								</Grid.RowDefinitions>
+								<Button HorizontalAlignment="Stretch">
+									<Border Grid.Row="0" BorderBrush="Transparent" BorderThickness="2" Margin="2" CornerRadius="3">
+										<Grid>
+											<Grid.ColumnDefinitions>
+												<ColumnDefinition Width="40" />
+												<!-- Icon Column -->
+												<ColumnDefinition Width="*" />
+												<!-- Text Column -->
+												<ColumnDefinition Width="40" />
+												<!-- Button Column -->
+											</Grid.ColumnDefinitions>
+
+											<!-- LEFT image -->
+											<!-- UserName -->
+											<!-- Button to remove friend, etc. -->
+
+											<Grid Grid.Column="0" Width="30" Height="30">
+												<!-- Profile Image -->
+												<Image Width="30" Height="30"
+													   asyncImageLoader:ImageLoader.Source="{Binding ProfilePictureURL}"/>
+
+												<!-- Status Indicator (Bottom-Right of Profile Image) -->
+												<Border Width="10" Height="10" CornerRadius="6" BorderBrush="Transparent"
+														Background="{Binding IsOnline, Converter={StaticResource OnlineStatusConverter}}"
+														BorderThickness="1"
+														HorizontalAlignment="Right" VerticalAlignment="Bottom"
+														Margin="0,0,-1,-1"/>
+											</Grid>
+
+											<TextBlock Grid.Column="1" Text="{Binding UserName}" VerticalAlignment="Center" Foreground="White" />
+											<Button Grid.Column="2" Background="Transparent" Width="30" Height="30" Margin="10, 0, 0, 0" HorizontalAlignment="Right">
+												<TextBlock Text="⋮" FontWeight="Bold" HorizontalAlignment="Center"></TextBlock>
+											</Button>
+
+										</Grid>
+									</Border>
+								</Button>
+							</Grid>
+						</DataTemplate>
+					</ItemsControl.ItemTemplate>
+				</ItemsControl>
+				<TextBlock Text="Friend Requests: "></TextBlock>
+				<ItemsControl ItemsSource="{Binding FriendRequests}">
+					<ItemsControl.ItemTemplate>
+						<DataTemplate>
+							<Grid>
+								<Grid.RowDefinitions>
+									<RowDefinition Height="40" />
+									<!-- Text Input -->
+									<RowDefinition Height="40" />
+									<!-- Gift Icon -->
+									<RowDefinition Height="40" />
+									<!-- Gift Icon -->
+								</Grid.RowDefinitions>
+								<Button HorizontalAlignment="Stretch">
+									<Border Grid.Row="0" BorderBrush="Transparent" BorderThickness="2" Margin="2" CornerRadius="3">
+										<Grid>
+											<Grid.ColumnDefinitions>
+												<ColumnDefinition Width="40" />
+												<!-- Icon Column -->
+												<ColumnDefinition Width="*" />
+												<ColumnDefinition Width="30" />
+												<ColumnDefinition Width="30" />
+											</Grid.ColumnDefinitions>
+
+											<!-- LEFT image -->
+											<!-- UserName -->
+											<!-- Button to remove friend, etc. -->
+
+											<Grid Grid.Column="0" Width="30" Height="30">
+												<!-- Profile Image -->
+												<Image Width="30" Height="30"
+													   asyncImageLoader:ImageLoader.Source="{Binding ProfilePictureURL}"/>
+
+												<!-- Status Indicator (Bottom-Right of Profile Image) -->
+												<Border Width="10" Height="10" CornerRadius="6" BorderBrush="Transparent"
+														Background="{Binding IsOnline, Converter={StaticResource OnlineStatusConverter}}"
+														BorderThickness="1"
+														HorizontalAlignment="Right" VerticalAlignment="Bottom"
+														Margin="0,0,-1,-1"/>
+											</Grid>
+
+											<TextBlock Grid.Column="1" Text="{Binding UserName}" VerticalAlignment="Center" Foreground="White" />
+											<Button Grid.Column="2" Command="{Binding DataContext.AcceptFriendAsync, RelativeSource={RelativeSource AncestorType=ItemsControl}}" CommandParameter="{Binding RequestId}">
+												<Svg Path="/Assets/check-solid.svg" Width="13" Height="13" />
+											</Button>
+
+											<Button Grid.Column="3" Command="{Binding DataContext.DeclineFriendAsync, RelativeSource={RelativeSource AncestorType=ItemsControl}}" CommandParameter="{Binding RequestId}">
+												<Svg Path="/Assets/xmark-solid.svg" Width="13" Height="13" />
+											</Button>
+										</Grid>
+									</Border>
+								</Button>
+							</Grid>
+						</DataTemplate>
+					</ItemsControl.ItemTemplate>
+				</ItemsControl>
+			</StackPanel>
 			<!-- Dynamic List of User Buttons -->
-			<Grid>
-				<Grid.RowDefinitions>
-					<RowDefinition Height="40" />
-					<!-- Text Input -->
-					<RowDefinition Height="40" />
-					<!-- Gift Icon -->
-					<RowDefinition Height="40" />
-					<!-- Gift Icon -->
-				</Grid.RowDefinitions>
-				<Button HorizontalAlignment="Stretch">
-					<Border Grid.Row="0" BorderBrush="Transparent" BorderThickness="2" Margin="2" CornerRadius="3">
-						<Grid>
-							<Grid.ColumnDefinitions>
-								<ColumnDefinition Width="40" />
-								<!-- Icon Column -->
-								<ColumnDefinition Width="*" />
-								<!-- Text Column -->
-								<ColumnDefinition Width="40" />
-								<!-- Button Column -->
-							</Grid.ColumnDefinitions>
-
-							<!-- LEFT image -->
-							<!-- UserName -->
-							<!-- Button to remove friend, etc. -->
-
-							<Image Margin="-5,0,0,0" Grid.Column="0" Width="30" Height="30" asyncImageLoader:ImageLoader.Source="https://res.cloudinary.com/motiondrive/image/upload/default"></Image>
-							<TextBlock Grid.Column="1" Text="UserName" VerticalAlignment="Center" Foreground="White" />
-							<Button Grid.Column="2" Background="Transparent" Width="30" Height="30" Margin="10, 0, 0, 0" HorizontalAlignment="Right">
-								<TextBlock Text="⋮" FontWeight="Bold" HorizontalAlignment="Center"></TextBlock>
-							</Button>
-
-						</Grid>
-					</Border>
-				</Button>
-			</Grid>
 		</Border>
 
 		<Border Grid.Row="2" Grid.Column="0" Background="#3d3d3d" Padding="10" CornerRadius="5">
@@ -71,10 +148,15 @@
 					<ColumnDefinition Width="40" />
 					<!-- Gift Icon -->
 				</Grid.ColumnDefinitions>
-				<TextBox Grid.Column="0" Watermark="Freundescode eingeben" Background="#40444B" Foreground="White" />
-				<Button Grid.Column="1" Width="30" Height="30" Margin="10, 0, 0, 0">
+				<Grid.RowDefinitions>
+					<RowDefinition Height="2*" />
+					<RowDefinition Height="*" />
+				</Grid.RowDefinitions>
+				<TextBox Text="{Binding FriendCode}" Grid.Row="0" Grid.Column="0" Watermark="Freundescode eingeben" Background="#40444B" Foreground="White" />
+				<Button Grid.Row="0" Grid.Column="1" Width="30" Height="30" Margin="10, 0, 0, 0" Command="{Binding RequestFriendAsync}">
 					<TextBlock Text="+" TextAlignment="Center" HorizontalAlignment="Stretch" />
 				</Button>
+				<TextBlock Text="Something went wrong!" FontSize="13" IsVisible="{Binding HasError}" Grid.Column="0" Grid.Row="1" Foreground="Red"></TextBlock>
 			</Grid>
 		</Border>
 

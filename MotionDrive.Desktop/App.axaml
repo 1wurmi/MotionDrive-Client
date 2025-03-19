@@ -2,9 +2,9 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              x:Class="Desktop.App"
              RequestedThemeVariant="Default"
-			 xmlns:local="using:Desktop">
-             <!-- "Default" ThemeVariant follows system theme variant. "Dark" or "Light" are other available options. -->
-
+			 xmlns:local="using:Desktop"
+			 xmlns:converter="clr-namespace:MotionDrive.Desktop.Converter;assembly=MotionDrive.Desktop">
+             <!-- "Default" ThemeVariant follows system theme variant. "Dark" or "Light" are other available options. -->	
     <Application.Styles>
         <FluentTheme />
 		<StyleInclude Source="avares://MotionDrive.Desktop/Assets/Icons.axaml"></StyleInclude>

@@ -5,6 +5,8 @@ using Desktop.ViewModels;
 using Desktop.Views;
 using Microsoft.Extensions.DependencyInjection;
 using MotionDrive.Desktop;
+using MotionDrive.Desktop.Converter;
+using MotionDrive.Desktop.Services;
 using MotionDrive.Desktop.ViewModels;
 using Recorder;
 using System;
@@ -31,7 +33,7 @@ public partial class App : Application
 
         AvaloniaXamlLoader.Load(this);
 
-        // TODO READ SAVE DIR FROM CONFIG
+        Resources["OnlineStatusConverter"] = new OnlineStatusConverter();
 
     }
 
@@ -47,10 +49,9 @@ public partial class App : Application
                 DataContext = vmContext
             };
             desktop.MainWindow = splashWindow;
+            desktop.MainWindow.Show();
 
-            vmContext.DoWork();
-
-            Trace.WriteLine(vmContext.IsLoggedIn);
+            await vmContext.DoWork();
 
             desktop.MainWindow = new MainWindow
             {

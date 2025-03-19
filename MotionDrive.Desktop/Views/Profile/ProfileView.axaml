@@ -34,7 +34,11 @@
 							<StackPanel Margin="0,-20,0,0" Orientation="Horizontal" HorizontalAlignment="Stretch">
 								<TextBlock Text="{Binding Profile.userName}" FontSize="25" FontWeight="Bold"></TextBlock>
 								<Image ToolTip.Tip="Austria" ToolTip.ShowDelay="3" ToolTip.Placement="Right" Margin="5,0,0,0" Height="35" asyncImageLoader:ImageLoader.Source="https://flagsapi.com/AT/flat/64.png"></Image>
-								
+							</StackPanel>
+							<StackPanel  Margin="0" Orientation="Horizontal" HorizontalAlignment="Stretch">
+								<TextBlock Text="Friend Code:" FontSize="12"></TextBlock>
+								<TextBlock Text="{Binding Profile.friendCode}" FontSize="12" FontWeight="Bold"></TextBlock>
+								<!-- TODO: small button to copy friendCode directly -->
 							</StackPanel>
 							<Grid>
 								<Grid.RowDefinitions>

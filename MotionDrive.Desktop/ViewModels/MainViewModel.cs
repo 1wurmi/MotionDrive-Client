@@ -2,6 +2,7 @@
 using MotionDrive.Desktop.Config;
 using MotionDrive.Desktop.Models;
 using MotionDrive.Desktop.SecrectsConfig;
+using MotionDrive.Desktop.Services;
 using ReactiveUI;
 using System.Collections;
 
