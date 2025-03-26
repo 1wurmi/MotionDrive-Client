@@ -1,5 +1,7 @@
 using Avalonia;
 using Avalonia.Controls;
+using Avalonia.Controls.Primitives;
+using Avalonia.Interactivity;
 using Avalonia.Markup.Xaml;
 using Avalonia.ReactiveUI;
 using LiveChartsCore.Drawing;
@@ -11,16 +13,27 @@ using System.Linq;
 namespace MotionDrive.Desktop;
 public partial class TelemetryChartsView : ReactiveUserControl<TelemetryChartsViewModel>
 {
+
+    private Popup OptionsPopup;
+    private Button DropdownButton;
+    private CheckBox Option1, Option2, Option3;
+
     public TelemetryChartsView()
     {
         this.WhenActivated(disposables => { });
         AvaloniaXamlLoader.Load(this);
+
+        OptionsPopup = this.FindControl<Popup>("optionsPopup");
+        DropdownButton = this.FindControl<Button>("dropdownButton");
+        Option1 = this.FindControl<CheckBox>("option1");
+        Option2 = this.FindControl<CheckBox>("option2");
+        Option3 = this.FindControl<CheckBox>("option3");
     }
 
     private void ComboBox_SelectionChanged(object? sender, Avalonia.Controls.SelectionChangedEventArgs e)
     {
         ComboBox cb = sender as ComboBox;
-        ViewModel.LoadData(cb.SelectedIndex);
+        ViewModel.LoadData(cb.SelectedIndex); 
     }
 
     private void CartesianChart_PointerMoved(object? sender, Avalonia.Input.PointerEventArgs e)
@@ -35,6 +48,10 @@ public partial class TelemetryChartsView : ReactiveUserControl<TelemetryChartsVi
 
         if (chartPoints.Count() > 0)
             ViewModel.UpdateTyreData(chartPoints.FirstOrDefault().Index);
+    }
 
+    private void TogglePopup(object? sender, RoutedEventArgs e)
+    {
+        OptionsPopup.IsOpen = !OptionsPopup.IsOpen;
     }
 }

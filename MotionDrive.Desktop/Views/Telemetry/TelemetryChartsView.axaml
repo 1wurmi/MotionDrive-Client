@@ -42,6 +42,38 @@
 
 				<Button Content="Send to Friend" Background="#800000" Foreground="White" Width="120"
 						HorizontalAlignment="Right" Margin="8,0,30,0" CornerRadius="5" DockPanel.Dock="Right" HorizontalContentAlignment="Center"/>
+
+
+				<Button Name="dropdownButton" Content="Optionen auswählen" Click="TogglePopup" Background="#4D4D4D"/>
+
+				<Popup Name="optionsPopup" PlacementMode="Bottom" IsLightDismissEnabled="True" PlacementTarget="{Binding #dropdownButton}">
+					<Border BorderBrush="Black" BorderThickness="1" Padding="5 5 10 0" Background="#4D4D4D" CornerRadius="5">
+						<StackPanel>
+							<CheckBox Content="Option 1" Name="option1"/>
+							<CheckBox Content="Option 2" Name="option2"/>
+							<CheckBox Content="Option 3" Name="option3"/>
+							<CheckBox Content="Option 3" Name="option4"/>
+							<CheckBox Content="Option 3" Name="option5"/>
+							<CheckBox Content="Option 3" Name="option6"/>
+							<CheckBox Content="Option 3" Name="option7"/>
+							<CheckBox Content="Option 3" Name="option8"/>
+							<CheckBox Content="Option 3" Name="option9"/>
+							<CheckBox Content="Option 3" Name="option10"/>
+							<CheckBox Content="Option 3" Name="option11"/>
+							<CheckBox Content="Option 3" Name="option12"/>
+						</StackPanel>
+					</Border>
+				</Popup>
+
+				<!--<ComboBox Name="Dropdown" ItemsSource="{Binding TelemetryOptions}" Margin="30, 0, 0, 0" VerticalAlignment="Center" Width="175" Background="#4D4D4D"
+						  Foreground="White" PlaceholderForeground="#c4c4c4" CornerRadius="5" PlaceholderText="Telemetry Options"  HorizontalContentAlignment="Center">
+					<ComboBox.ItemTemplate>
+						<DataTemplate>
+							<CheckBox Content="{Binding}" IsChecked="False"/>
+						</DataTemplate>
+					</ComboBox.ItemTemplate>
+				</ComboBox>-->
+				
 			</DockPanel>
 		</Border>
 

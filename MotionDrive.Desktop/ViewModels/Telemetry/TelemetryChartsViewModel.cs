@@ -11,6 +11,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Reflection.Metadata.Ecma335;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -18,6 +19,11 @@ namespace MotionDrive.Desktop.ViewModels.Telemetry;
 public class TelemetryChartsViewModel : ReactiveObject
 {
     private int _currentLapIndex = -1;
+    private string[] _telemetryOptions = ["a", "b", "c"];
+    public string[]  TelemetryOptions
+    {
+        get => _telemetryOptions;
+    }
     public int CurrentLapIndex
     {
         get => _currentLapIndex;
