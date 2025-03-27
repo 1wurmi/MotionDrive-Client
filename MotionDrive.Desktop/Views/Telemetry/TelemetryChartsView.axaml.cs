@@ -25,9 +25,6 @@ public partial class TelemetryChartsView : ReactiveUserControl<TelemetryChartsVi
 
         OptionsPopup = this.FindControl<Popup>("optionsPopup");
         DropdownButton = this.FindControl<Button>("dropdownButton");
-        Option1 = this.FindControl<CheckBox>("option1");
-        Option2 = this.FindControl<CheckBox>("option2");
-        Option3 = this.FindControl<CheckBox>("option3");
     }
 
     private void ComboBox_SelectionChanged(object? sender, Avalonia.Controls.SelectionChangedEventArgs e)

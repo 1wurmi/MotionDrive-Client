@@ -49,31 +49,16 @@
 				<Popup Name="optionsPopup" PlacementMode="Bottom" IsLightDismissEnabled="True" PlacementTarget="{Binding #dropdownButton}">
 					<Border BorderBrush="Black" BorderThickness="1" Padding="5 5 10 0" Background="#4D4D4D" CornerRadius="5">
 						<StackPanel>
-							<CheckBox Content="Option 1" Name="option1"/>
-							<CheckBox Content="Option 2" Name="option2"/>
-							<CheckBox Content="Option 3" Name="option3"/>
-							<CheckBox Content="Option 3" Name="option4"/>
-							<CheckBox Content="Option 3" Name="option5"/>
-							<CheckBox Content="Option 3" Name="option6"/>
-							<CheckBox Content="Option 3" Name="option7"/>
-							<CheckBox Content="Option 3" Name="option8"/>
-							<CheckBox Content="Option 3" Name="option9"/>
-							<CheckBox Content="Option 3" Name="option10"/>
-							<CheckBox Content="Option 3" Name="option11"/>
-							<CheckBox Content="Option 3" Name="option12"/>
+							<ItemsControl ItemsSource="{Binding TelemetryOptions}">
+								<ItemsControl.ItemTemplate>
+									<DataTemplate>
+										<CheckBox Content="{Binding}" Command="{Binding DataContext.ActivateTelemetryCommand, RelativeSource={RelativeSource AncestorType=ItemsControl}}" CommandParameter="{Binding}"/>
+									</DataTemplate>
+								</ItemsControl.ItemTemplate>
+							</ItemsControl>
 						</StackPanel>
 					</Border>
-				</Popup>
-
-				<!--<ComboBox Name="Dropdown" ItemsSource="{Binding TelemetryOptions}" Margin="30, 0, 0, 0" VerticalAlignment="Center" Width="175" Background="#4D4D4D"
-						  Foreground="White" PlaceholderForeground="#c4c4c4" CornerRadius="5" PlaceholderText="Telemetry Options"  HorizontalContentAlignment="Center">
-					<ComboBox.ItemTemplate>
-						<DataTemplate>
-							<CheckBox Content="{Binding}" IsChecked="False"/>
-						</DataTemplate>
-					</ComboBox.ItemTemplate>
-				</ComboBox>-->
-				
+				</Popup>				
 			</DockPanel>
 		</Border>
 
@@ -222,7 +207,7 @@
 
 		<Border Margin="5, 5, 5, 5" CornerRadius="5" Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="10" Grid.RowSpan="10">
 			<StackPanel Margin="10" HorizontalAlignment="Stretch" VerticalAlignment="Top" Spacing="5">
-				<StackPanel HorizontalAlignment="Stretch" VerticalAlignment="Top">
+				<!--<StackPanel HorizontalAlignment="Stretch" VerticalAlignment="Top">
 					<TextBlock Text="Throttle, Brake, Clutch" Foreground="Gray" FontSize="10" HorizontalAlignment="Left"/>
 					<Border CornerRadius="5" Height="150">
 						<lvc:CartesianChart
@@ -259,7 +244,98 @@
 							YAxes="{Binding RPMYAxis}"
 							TooltipPosition="Hidden"/>
 					</Border>
+				</StackPanel>-->
+				
+				<StackPanel HorizontalAlignment="Stretch" VerticalAlignment="Top" IsVisible="{Binding IsThrottleBrakeClutchActivated}">
+					<TextBlock Text="ThrottleBrakeClutch" Foreground="Gray" FontSize="10" HorizontalAlignment="Left"/>
+					<!--<Border CornerRadius="5" Height="150">
+						<lvc:CartesianChart
+							Series="{Binding SteeringSeries}"
+							ZoomMode="X"
+							YAxes="{Binding SteeringYAxis}"
+							XAxes="{Binding ThrottleBrakeClutchXAxis}"
+							TooltipPosition="Hidden"/>
+					</Border>-->
 				</StackPanel>
+				<StackPanel HorizontalAlignment="Stretch" VerticalAlignment="Top" IsVisible="{Binding IsRPMActivated}">
+					<TextBlock Text="Rpm" Foreground="Gray" FontSize="10" HorizontalAlignment="Left"/>
+					<!--<Border CornerRadius="5" Height="150">
+						<lvc:CartesianChart
+							Series="{Binding SteeringSeries}"
+							ZoomMode="X"
+							YAxes="{Binding SteeringYAxis}"
+							XAxes="{Binding ThrottleBrakeClutchXAxis}"
+							TooltipPosition="Hidden"/>
+					</Border>-->
+				</StackPanel>
+				<StackPanel HorizontalAlignment="Stretch" VerticalAlignment="Top" IsVisible="{Binding IsGearActivated}">
+					<TextBlock Text="Gear" Foreground="Gray" FontSize="10" HorizontalAlignment="Left"/>
+					<!--<Border CornerRadius="5" Height="150">
+						<lvc:CartesianChart
+							Series="{Binding SteeringSeries}"
+							ZoomMode="X"
+							YAxes="{Binding SteeringYAxis}"
+							XAxes="{Binding ThrottleBrakeClutchXAxis}"
+							TooltipPosition="Hidden"/>
+					</Border>-->
+				</StackPanel>
+				<StackPanel HorizontalAlignment="Stretch" VerticalAlignment="Top" IsVisible="{Binding IsSpeedActivated}">
+					<TextBlock Text="Speed" Foreground="Gray" FontSize="10" HorizontalAlignment="Left"/>
+					<!--<Border CornerRadius="5" Height="150">
+						<lvc:CartesianChart
+							Series="{Binding SteeringSeries}"
+							ZoomMode="X"
+							YAxes="{Binding SteeringYAxis}"
+							XAxes="{Binding ThrottleBrakeClutchXAxis}"
+							TooltipPosition="Hidden"/>
+					</Border>-->
+				</StackPanel>
+				<StackPanel HorizontalAlignment="Stretch" VerticalAlignment="Top" IsVisible="{Binding IsTyreTempActivated}">
+					<TextBlock Text="TyreTemp" Foreground="Gray" FontSize="10" HorizontalAlignment="Left"/>
+					<!--<Border CornerRadius="5" Height="150">
+						<lvc:CartesianChart
+							Series="{Binding SteeringSeries}"
+							ZoomMode="X"
+							YAxes="{Binding SteeringYAxis}"
+							XAxes="{Binding ThrottleBrakeClutchXAxis}"
+							TooltipPosition="Hidden"/>
+					</Border>-->
+				</StackPanel>
+				<StackPanel HorizontalAlignment="Stretch" VerticalAlignment="Top" IsVisible="{Binding IsTyreDegradationActivated}">
+					<TextBlock Text="TyreDegradation" Foreground="Gray" FontSize="10" HorizontalAlignment="Left"/>
+					<!--<Border CornerRadius="5" Height="150">
+						<lvc:CartesianChart
+							Series="{Binding SteeringSeries}"
+							ZoomMode="X"
+							YAxes="{Binding SteeringYAxis}"
+							XAxes="{Binding ThrottleBrakeClutchXAxis}"
+							TooltipPosition="Hidden"/>
+					</Border>-->
+				</StackPanel>
+				<StackPanel HorizontalAlignment="Stretch" VerticalAlignment="Top" IsVisible="{Binding IsBrakeTempActivated}">
+					<TextBlock Text="BrakeTemp" Foreground="Gray" FontSize="10" HorizontalAlignment="Left"/>
+					<!--<Border CornerRadius="5" Height="150">
+						<lvc:CartesianChart
+							Series="{Binding SteeringSeries}"
+							ZoomMode="X"
+							YAxes="{Binding SteeringYAxis}"
+							XAxes="{Binding ThrottleBrakeClutchXAxis}"
+							TooltipPosition="Hidden"/>
+					</Border>-->
+				</StackPanel>
+				<StackPanel HorizontalAlignment="Stretch" VerticalAlignment="Top" IsVisible="{Binding IsBrakeDegradationActivated}">
+					<TextBlock Text="BrakeDegradation" Foreground="Gray" FontSize="10" HorizontalAlignment="Left"/>
+					<!--<Border CornerRadius="5" Height="150">
+						<lvc:CartesianChart
+							Series="{Binding SteeringSeries}"
+							ZoomMode="X"
+							YAxes="{Binding SteeringYAxis}"
+							XAxes="{Binding ThrottleBrakeClutchXAxis}"
+							TooltipPosition="Hidden"/>
+					</Border>-->
+				</StackPanel>
+				
+				
 			</StackPanel>
 		</Border>
 	</Grid>

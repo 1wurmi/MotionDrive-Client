@@ -6,15 +6,15 @@ using System.Threading.Tasks;
 
 namespace MotionDrive.Desktop.Enums
 {
-    public enum TelemetryView
+    public enum TelemetryViewTypes
     {
-        THROTTLEBRAKECLUTCH,
+        ThrottleBrakeClutch,
         RPM,
-        GEAR,
-        SPEED,
-        TYRETEMP,
-        TYREDEGRADATION,
-        BRAKETEMP,
-        BRAKEDEGRADATION
+        Gear,
+        Speed,
+        Tyretemp,
+        TyreDegradation,
+        BrakeTemp,
+        BrakeDegradation
     }
 }

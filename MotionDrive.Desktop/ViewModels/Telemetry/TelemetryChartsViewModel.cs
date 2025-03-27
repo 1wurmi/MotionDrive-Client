@@ -3,6 +3,7 @@ using LiveChartsCore.Defaults;
 using LiveChartsCore.Geo;
 using LiveChartsCore.SkiaSharpView;
 using LiveChartsCore.SkiaSharpView.Painting;
+using MotionDrive.Desktop.Enums;
 using MotionDrive.Desktop.Models;
 using ReactiveUI;
 using Recorder.Model;
@@ -10,10 +11,13 @@ using SkiaSharp;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.Linq;
+using System.Reactive;
 using System.Reflection.Metadata.Ecma335;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Input;
 
 namespace MotionDrive.Desktop.ViewModels.Telemetry;
 public class TelemetryChartsViewModel : ReactiveObject
@@ -23,6 +27,7 @@ public class TelemetryChartsViewModel : ReactiveObject
     public string[]  TelemetryOptions
     {
         get => _telemetryOptions;
+        set => this.RaiseAndSetIfChanged(ref _telemetryOptions, value);
     }
     public int CurrentLapIndex
     {
@@ -117,10 +122,17 @@ public class TelemetryChartsViewModel : ReactiveObject
     public ObservableCollection<LapModel> Laps { get; set; }
 
     public TelemetryViewModel parentTelemetryViewModel;
+
+    public ICommand ActivateTelemetryCommand { get; set; }
     public TelemetryChartsViewModel(Session session, TelemetryViewModel parentTelemetryViewModel)
     {
         this.parentTelemetryViewModel = parentTelemetryViewModel;
         this.session = session;
+
+        this.TelemetryOptions = [ "ThrottleBrakeClutch", "RPM", "Gear", "Speed", "TyreTemp", "TyreDegradation", "BrakeTemp", "BrakeDegradation" ];
+
+        ActivateTelemetryCommand = ReactiveCommand.Create<string>(ActivateTelemetry);
+
         this.Initialize();
     }
 
@@ -214,6 +226,57 @@ public class TelemetryChartsViewModel : ReactiveObject
             Math.Round(tyreWearValues[index][2], 1),
             Math.Round(tyreWearValues[index][3], 1)
         );
+    }
+
+
+    private bool _isThrottleBrakeClutchActivated = false;
+    private bool _isRPMActivated = false;
+    private bool _isGearActivated = false;
+    private bool _isSpeedActivated = false;
+    private bool _isTyreTempActivated = false;
+    private bool _isTyreDegradationActivated = false;
+    private bool _isBrakeTempActivated = false;
+    private bool _isBrakeDegradationActivated = false;
+
+    public bool IsThrottleBrakeClutchActivated { get => _isThrottleBrakeClutchActivated; set => this.RaiseAndSetIfChanged(ref _isThrottleBrakeClutchActivated, value); }
+    public bool IsRPMActivated { get => _isRPMActivated; set => this.RaiseAndSetIfChanged(ref _isRPMActivated, value); }
+    public bool IsGearActivated { get => _isGearActivated; set => this.RaiseAndSetIfChanged(ref _isGearActivated, value); }
+    public bool IsSpeedActivated { get => _isSpeedActivated; set => this.RaiseAndSetIfChanged(ref _isSpeedActivated, value); }
+    public bool IsTyreTempActivated { get => _isTyreTempActivated; set => this.RaiseAndSetIfChanged(ref _isTyreTempActivated, value); }
+    public bool IsTyreDegradationActivated { get => _isTyreDegradationActivated; set => this.RaiseAndSetIfChanged(ref _isTyreDegradationActivated, value); }
+    public bool IsBrakeTempActivated { get => _isBrakeTempActivated; set => this.RaiseAndSetIfChanged(ref _isBrakeTempActivated, value); }
+    public bool IsBrakeDegradationActivated { get => _isBrakeDegradationActivated; set => this.RaiseAndSetIfChanged(ref _isBrakeDegradationActivated, value); }
+
+
+    public void ActivateTelemetry(string telemetryName)
+    {
+        switch (telemetryName)
+        {
+            case "ThrottleBrakeClutch":
+                IsThrottleBrakeClutchActivated = !IsThrottleBrakeClutchActivated;
+                break;
+            case "RPM":
+                IsRPMActivated = !IsRPMActivated;
+                break;
+            case "Speed":
+                IsSpeedActivated = !IsSpeedActivated;
+                break;
+            case "Gear":
+                IsGearActivated = !IsGearActivated;
+                break;
+            case "TyreTemp":
+                IsTyreTempActivated = !IsTyreTempActivated;
+                break;
+            case "TyreDegradation":
+                IsTyreDegradationActivated = !IsTyreDegradationActivated;
+                break;
+            case "BrakeTemp":
+                IsBrakeTempActivated = !IsBrakeTempActivated;
+                break;
+            case "BrakeDegradation":
+                IsBrakeDegradationActivated = !IsBrakeDegradationActivated;
+                break;
+        }
     }
 
     public async void ShowPreviousLap()
