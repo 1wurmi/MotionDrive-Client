@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AvaloniaProject">
+    <option name="projectPerEditor">
+      <map>
+        <entry key="MotionDrive.Desktop/Views/LoginView.axaml" value="MotionDrive.Desktop.Desktop/MotionDrive.Desktop.Desktop.csproj" />
+        <entry key="MotionDrive.Desktop/Views/MainWindow.axaml" value="MotionDrive.Desktop.Desktop/MotionDrive.Desktop.Desktop.csproj" />
+        <entry key="MotionDrive.Desktop/Views/MotionSysView.axaml" value="MotionDrive.Desktop.Desktop/MotionDrive.Desktop.Desktop.csproj" />
+        <entry key="MotionDrive.Desktop/Views/RegisterView.axaml" value="MotionDrive.Desktop.Desktop/MotionDrive.Desktop.Desktop.csproj" />
+        <entry key="MotionDrive.Desktop/Views/TeamsView.axaml" value="MotionDrive.Desktop.Desktop/MotionDrive.Desktop.Desktop.csproj" />
+      </map>
+    </option>
+  </component>
+</project>

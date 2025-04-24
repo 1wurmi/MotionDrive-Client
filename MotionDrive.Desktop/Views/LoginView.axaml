@@ -31,7 +31,7 @@
 				<StackPanel Margin="20, 15, 20, 0">
 					<Label Foreground="White" FontSize="9" Padding="0">Username</Label>
 					<TextBox Text="{Binding Username}" Watermark="Username" Margin="0,0,0,10"/>
-					<Label Foreground="White" FontSize="9" Padding="0">Username</Label>
+					<Label Foreground="White" FontSize="9" Padding="0">Password</Label>
 					<TextBox Text="{Binding Password}" Watermark="Password" Margin="0,0,0,10" RevealPassword="True" PasswordChar="*"/>
 					
 					<StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
