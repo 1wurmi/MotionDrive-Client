@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "MotionDrive.DisplayApplication": {
+      "commandName": "Project",
+      "commandLineArgs": "-d 0"
+    }
+  }
+}

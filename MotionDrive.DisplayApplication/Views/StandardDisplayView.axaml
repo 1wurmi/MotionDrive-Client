@@ -1,0 +1,161 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+			 xmlns:vm="using:MotionDrive.DisplayApplication.ViewModels"
+			 x:DataType="vm:StandardDisplayViewModel"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="400"
+             x:Class="MotionDrive.DisplayApplication.StandardDisplayView">
+
+	<Design.DataContext>
+		<vm:MainWindowViewModel/>
+	</Design.DataContext>
+
+	<Grid>
+		<Grid.RowDefinitions>
+			<RowDefinition Height="*"/>
+			<RowDefinition Height="10*"/>
+		</Grid.RowDefinitions>
+
+		<Border Grid.Row="0" BorderThickness="0 0 0 1" BorderBrush="White">
+			<StackPanel Background="#750E21" Grid.Row="0">
+			</StackPanel>
+		</Border>
+
+		<StackPanel Grid.Row="1">
+			<Grid>
+				<Grid.ColumnDefinitions>
+					<ColumnDefinition Width="*"/>
+					<ColumnDefinition Width="1.5*"/>
+					<ColumnDefinition Width="*"/>
+				</Grid.ColumnDefinitions>
+
+				<!-- Left Panel  -->
+				<StackPanel Grid.Column="0">
+					<!-- Position + Lap -->
+					<Grid VerticalAlignment="Stretch" Margin="20 8 0 20">
+						<Grid.ColumnDefinitions>
+							<ColumnDefinition Width="*"/>
+							<ColumnDefinition Width="*"/>
+						</Grid.ColumnDefinitions>
+
+						<StackPanel Grid.Column="0" Spacing="5">
+							<Border CornerRadius="4" Background="#3d3d3d" Padding="10 5 10 5">
+								<TextBlock Text="Position" FontWeight="Bold" TextAlignment="Center"></TextBlock>
+							</Border>
+							<Border CornerRadius="4" Background="#3d3d3d" Padding="10 5 10 5" VerticalAlignment="Stretch">
+								<TextBlock Text="Lap" FontWeight="Bold" VerticalAlignment="Center" TextAlignment="Center"></TextBlock>
+							</Border>
+						</StackPanel>
+						<StackPanel Grid.Column="1" Spacing="5">
+							<TextBlock VerticalAlignment="Center" Margin="20 0 0 0" Text="{Binding Position}" Padding="10 5 10 5"  TextAlignment="Center"></TextBlock>
+							<TextBlock VerticalAlignment="Center" Margin="20 0 0 0" Text="{Binding Lap}" Padding="10 5 10 5"  TextAlignment="Center"></TextBlock>
+						</StackPanel>
+					</Grid>
+					<!-- LapTime -->
+					<StackPanel Margin="20 8 0 5">
+						<Border Background="#3d3d3d" VerticalAlignment="Stretch" CornerRadius="4" Padding="10 5 10 5">
+							<TextBlock Text="LapTime" TextAlignment="Center" FontWeight="Bold"></TextBlock>
+						</Border>
+					</StackPanel>
+					<StackPanel Margin="20 0 0 10">
+						<TextBlock Text="{Binding LapTime}" TextAlignment="Center"></TextBlock>
+					</StackPanel>
+					<!-- Pred. Time -->
+					<StackPanel Margin="20 8 0 5">
+						<Border Background="#3d3d3d" VerticalAlignment="Stretch" CornerRadius="4" Padding="10 5 10 5">
+							<TextBlock Text="Pred. Time" TextAlignment="Center" FontWeight="Bold"></TextBlock>
+						</Border>
+					</StackPanel>
+					<StackPanel Margin="20 0 0 20">
+						<TextBlock Text="{Binding PredTime}" TextAlignment="Center"></TextBlock>
+					</StackPanel>
+					<!-- Tyre Pressure -->
+					<StackPanel Margin="20 8 0 5">
+						<Border Background="#3d3d3d" VerticalAlignment="Stretch" CornerRadius="4" Padding="10 5 10 5">
+							<TextBlock Text="Tire Pressure" TextAlignment="Center" FontWeight="Bold"></TextBlock>
+						</Border>
+					</StackPanel>
+					<Grid Margin="20 8 0 5" VerticalAlignment="Stretch">
+						<Grid.ColumnDefinitions>
+							<ColumnDefinition Width="*"/>
+							<ColumnDefinition Width="10"/>
+							<ColumnDefinition Width="*"/>
+							</Grid.ColumnDefinitions>
+						<Grid.RowDefinitions>
+							<RowDefinition Height="*"/>
+							<RowDefinition Height="5"/>
+							<RowDefinition Height="*"/>
+						</Grid.RowDefinitions>
+
+						<!-- FL -->
+						<Border Padding="5" Grid.Row="0" Grid.Column="0" Background="#3d3d3d" CornerRadius="4" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+							<TextBlock Text="{Binding Tyres[0]}" FontWeight="Bold" TextAlignment="Center"></TextBlock>
+						</Border>
+						<!-- FR -->
+						<Border Padding="5" Grid.Row="0" Grid.Column="2" Background="#3d3d3d" CornerRadius="4" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+							<TextBlock Text="{Binding Tyres[1]}" FontWeight="Bold" TextAlignment="Center"></TextBlock>
+
+						</Border>
+						<!-- RL -->
+						<Border Padding="5" Grid.Row="2" Grid.Column="0" Background="#3d3d3d" CornerRadius="4" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+							<TextBlock Text="{Binding Tyres[2]}" FontWeight="Bold" TextAlignment="Center"></TextBlock>
+
+						</Border>
+						<!-- RR -->
+						<Border Padding="5" Grid.Row="2" Grid.Column="2" Background="#3d3d3d" CornerRadius="4" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+							<TextBlock Text="{Binding Tyres[3]}" FontWeight="Bold" TextAlignment="Center"></TextBlock>
+						</Border>
+					</Grid>
+				</StackPanel>
+
+				<!-- Middle Panel -->
+				<StackPanel Grid.Column="1">
+
+					<!-- Delta Anzeige -->
+					<Border Background="Red" CornerRadius="4" Margin="50 30 50 0" Padding="5">
+						<TextBlock Text="{Binding Delta}" FontWeight="Bold" VerticalAlignment="Center" TextAlignment="Center">
+							
+						</TextBlock>
+					</Border>
+					<!-- Gear -->
+					<TextBlock Text="{Binding Gear}" FontWeight="Bold" FontSize="120" TextAlignment="Center"/>
+					<!-- Speed -->
+					<Border Background="#3d3d3d" CornerRadius="4" Margin="50 10 50 0" Padding="5">
+						<TextBlock Text="{Binding Speed}" FontWeight="Bold" VerticalAlignment="Center" TextAlignment="Center">
+
+						</TextBlock>
+					</Border>
+					<Grid Margin="50 30 50 0">
+						<Grid.ColumnDefinitions>
+							<ColumnDefinition Width="*"></ColumnDefinition>
+							<ColumnDefinition Width="4"></ColumnDefinition>
+							<ColumnDefinition Width="*"></ColumnDefinition>
+						</Grid.ColumnDefinitions>
+
+						<!-- Fuel in -->
+						<StackPanel Grid.Column="0" HorizontalAlignment="Stretch" Spacing="5">
+							<Border Background="#3d3d3d" CornerRadius="4" Padding="5">
+								<TextBlock Text="Fuel In" FontWeight="Bold" VerticalAlignment="Center" TextAlignment="Center"/>
+							</Border>
+							<TextBlock Text="{Binding FuelIn}" FontWeight="Bold" VerticalAlignment="Center" TextAlignment="Center"/>
+						</StackPanel>
+						<!-- Fuel per Lap -->
+						<StackPanel Grid.Column="2" HorizontalAlignment="Stretch" Spacing="5">
+							<Border Background="#3d3d3d" CornerRadius="4" Padding="5">
+								<TextBlock Text="Fuel p. Lap" FontWeight="Bold" VerticalAlignment="Center" TextAlignment="Center"/>
+							</Border>
+							<TextBlock Text="{Binding FuelPerLap}" FontWeight="Bold" VerticalAlignment="Center" TextAlignment="Center"/>
+						</StackPanel>
+						
+					</Grid>
+				</StackPanel>
+
+				<!-- Right Panel -->
+				<StackPanel Grid.Column="2">
+					
+				</StackPanel>
+			</Grid>
+		</StackPanel>
+	</Grid>
+</UserControl>
